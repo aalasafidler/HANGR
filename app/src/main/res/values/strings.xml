@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Hangr</string>
     <string name="viewSavedOutfits">View Saved Outfits</string>
-    <color name="bg">#F4DBD8</color>
-    
+    <string name="tops">TOPS</string>
+    <string name="bottoms">BOTTOMS</string>
+    <string name="shoes">SHOES</string>
+    <string name="action_favorite">action_favourite</string>
+    <string name="action_settings">Go back</string>
+    <string name="action_settings2">View saved items</string>
+    <string name="action_settings3">Settings</string>
+
     <string-array name="categories">
         <item>Top</item>
         <item>Jeans</item>

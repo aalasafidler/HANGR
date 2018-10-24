@@ -1,8 +1,10 @@
 package com.hangr.hangr;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,11 +44,36 @@ public class CreateOutfit extends AppCompatActivity{
         shoes_carousel.setPageCount(shoes_images.length);
         shoes_carousel.setImageListener(shoes_Listener);
     }
-    //https://www.youtube.com/watch?v=kknBxoCOYXI
+//    //https://www.youtube.com/watch?v=kknBxoCOYXI
     @Override
             public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.outfits_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
+            case R.id.action_favorite:
+                openSavedOutfits();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    // When run opens Saved Outfits activity.
+    public void openSavedOutfits() {
+        Intent intent = new Intent(this, SavedOutfits.class);
+        startActivity(intent);
     }
 
     ImageListener tops_Listener = new ImageListener() {
