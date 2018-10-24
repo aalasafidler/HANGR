@@ -13,9 +13,9 @@ public class CreateOutfit extends AppCompatActivity{
 
     CarouselView tops_carousel, bottoms_carousel, shoes_carousel;
 
-    int[] tops_images = {R.drawable.ic_launcher_background};
-    int[] bottoms_images = {R.drawable.ic_launcher_background};
-    int[] shoes_images = {R.drawable.ic_launcher_background};
+    int[] tops_images = {R.drawable.t083263large, R.drawable.t3539717726366large, R.drawable.t5397177446928large, R.drawable.t35397121456317large, R.drawable.t35397175921984large};
+    int[] bottoms_images = {R.drawable.b35397177259627large, R.drawable.b5397177424742large, R.drawable.b3539717742438large};
+    int[] shoes_images = {R.drawable.s3539717635451large, R.drawable.s35397172277367large, R.drawable.s35397176100838large, R.drawable.s35397176103853large, R.drawable.s35397176433110large};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
