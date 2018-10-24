@@ -8,6 +8,7 @@
     <string name="action_settings">Go back</string>
     <string name="action_settings2">View saved items</string>
     <string name="action_settings3">Settings</string>
+    <string name="go_back">go back</string>
 
     <string-array name="categories">
         <item>Top</item>

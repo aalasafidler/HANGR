@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
@@ -54,8 +56,16 @@ public class CreateOutfit extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
+            case R.id.go_back:
+                goBack();
+                return true;
+
+            case R.id.view_saved_items:
+                openSavedOutfits();
+                return true;
+
+            case R.id.settings:
+                openSavedOutfits();
                 return true;
 
             case R.id.action_favorite:
@@ -73,6 +83,12 @@ public class CreateOutfit extends AppCompatActivity{
     // When run opens Saved Outfits activity.
     public void openSavedOutfits() {
         Intent intent = new Intent(this, SavedOutfits.class);
+        startActivity(intent);
+    }
+
+    // When run opens start up activity.
+    public void goBack() {
+        Intent intent = new Intent(this, StartUp.class);
         startActivity(intent);
     }
 
@@ -96,4 +112,14 @@ public class CreateOutfit extends AppCompatActivity{
             imageView.setImageResource(shoes_images[position]);
         }
     };
+
+///////// TOASTS
+//    public void toastMsg(String msg) {
+//        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+//        toast.show();
+//    }
+//
+//    public void displayOutfitSavedToast(View v) {
+//        toastMsg("No settings panel currently exists.");
+//    }
 }
