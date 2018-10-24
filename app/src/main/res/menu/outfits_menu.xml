@@ -2,23 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_favorite"
-        android:icon="@drawable/eyeopen"
-        android:title="@string/action_favorite"
-        app:showAsAction="ifRoom"/>
-
-    <!--<item-->
-        <!--android:id="@+id/go_back_arrow"-->
-        <!--android:icon="@drawable/gobackarrow"-->
-        <!--android:title="@string/go_back"-->
-        <!--app:showAsAction="ifRoom"/>-->
-
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/go_back"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
     <item android:id="@+id/view_saved_items"
         android:title="@string/action_settings2"
         app:showAsAction="never"/>
@@ -26,6 +10,18 @@
     <item android:id="@+id/settings"
         android:title="@string/action_settings3"
         app:showAsAction="never"/>
+
+    <!--<item-->
+    <!--android:id="@+id/action_favorite"-->
+    <!--android:icon="@drawable/eyeopen"-->
+    <!--android:title="@string/action_favorite"-->
+    <!--app:showAsAction="ifRoom"/>-->
+
+    <!--<item-->
+    <!--android:id="@+id/go_back_arrow"-->
+    <!--android:icon="@drawable/gobackarrow"-->
+    <!--android:title="@string/go_back"-->
+    <!--app:showAsAction="ifRoom"/>-->
 
 
 </menu>

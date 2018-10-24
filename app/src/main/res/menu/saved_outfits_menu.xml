@@ -7,4 +7,8 @@
         android:title="@string/go_back"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/go_to_camera"
+        android:title="@string/go_to_camera"
+        app:showAsAction="never"/>
+
 </menu>

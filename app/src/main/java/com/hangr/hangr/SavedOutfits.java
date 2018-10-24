@@ -48,6 +48,10 @@ public class SavedOutfits extends AppCompatActivity {
                 goBack();
                 return true;
 
+            case R.id.go_to_camera:
+                openCamera();
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -60,6 +64,11 @@ public class SavedOutfits extends AppCompatActivity {
     public void goBack() {
         Intent intent = new Intent(this, CreateOutfit.class);
         startActivity(intent);
+    }
+
+    public void openCamera() {
+        Intent camera_intent = new Intent(this, Camera.class);
+        startActivity(camera_intent);
     }
 }
 

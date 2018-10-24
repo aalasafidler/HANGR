@@ -56,9 +56,9 @@ public class CreateOutfit extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.go_back:
-                goBack();
-                return true;
+//            case R.id.go_back:
+//                goBack();
+//                return true;
 
             case R.id.view_saved_items:
                 openSavedOutfits();
@@ -67,10 +67,10 @@ public class CreateOutfit extends AppCompatActivity{
             case R.id.settings:
                 openSavedOutfits();
                 return true;
-
-            case R.id.action_favorite:
-                openSavedOutfits();
-                return true;
+//
+//            case R.id.action_favorite:
+//                openSavedOutfits();
+//                return true;
 
             default:
                 // If we got here, the user's action was not recognized.
