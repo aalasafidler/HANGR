@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Hangr</string>
+    <color name="bg">#F4DBD8</color>
+    
+    <string-array name="categories">
+        <item>Top</item>
+        <item>Jeans</item>
+        <item>Dress</item>
+        <item>Accessory</item>
+        <item>Shoes</item>
+    </string-array>
+
+    <string-array name="styles">
+        <item>Formal</item>
+        <item>Casual</item>
+        <item>Smart-Casual</item>
+        <item>IDGAF</item>
+        <item>Comfy</item>
+    </string-array>
+</resources>
