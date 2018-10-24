@@ -10,7 +10,8 @@ import android.widget.Button;
 
 public class StartUp extends AppCompatActivity {
     private Button button;
-    private Button aalasaButton;
+    private Button outfitButton;
+//    private Button aalasaButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,16 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
-        aalasaButton = findViewById(R.id.aalasaButton);
-        aalasaButton.setOnClickListener(new View.OnClickListener() {
+//        aalasaButton = findViewById(R.id.aalasaButton);
+//        aalasaButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openCreateOutfitActivity();
+//            }
+//        });
+
+        outfitButton = findViewById(R.id.outfitButton);
+        outfitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCreateOutfitActivity();

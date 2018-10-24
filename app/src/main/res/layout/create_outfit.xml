@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    // Dealing with tops
     <TextView
         android:id="@+id/tops_text"
         android:layout_width="wrap_content"
@@ -18,6 +19,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.synnapps.carouselview.CarouselView
+        android:id="@+id/tops_carousel"
+        android:layout_width="146dp"
+        android:layout_height="150dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="4dp"
+        app:autoPlay="false"
+        app:layout_constraintEnd_toStartOf="@+id/bottoms_text"
+        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintStart_toEndOf="@+id/shoes_text"
+        app:layout_constraintTop_toBottomOf="@+id/tops_text" />
+
+    // Dealing with bottoms
     <TextView
         android:id="@+id/bottoms_text"
         android:layout_width="wrap_content"
@@ -29,8 +43,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tops_carousel" />
-    /////
 
+    <com.synnapps.carouselview.CarouselView
+        android:id="@+id/bottoms_carousel"
+        android:layout_width="141dp"
+        android:layout_height="250dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:autoPlay="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottoms_text" />
+
+    // Dealing with shoes
     <TextView
         android:id="@+id/shoes_text"
         android:layout_width="wrap_content"
@@ -44,32 +69,9 @@
         app:layout_constraintTop_toBottomOf="@+id/bottoms_carousel" />
 
     <com.synnapps.carouselview.CarouselView
-        android:id="@+id/tops_carousel"
-        android:layout_width="146dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="4dp"
-        app:autoPlay="false"
-        app:layout_constraintEnd_toStartOf="@+id/bottoms_text"
-        app:layout_constraintHorizontal_bias="0.447"
-        app:layout_constraintStart_toEndOf="@+id/shoes_text"
-        app:layout_constraintTop_toBottomOf="@+id/tops_text" />
-
-    <com.synnapps.carouselview.CarouselView
-        android:id="@+id/bottoms_carousel"
-        android:layout_width="141dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:autoPlay="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottoms_text" />
-
-    <com.synnapps.carouselview.CarouselView
         android:id="@+id/shoes_carousel"
         android:layout_width="104dp"
-        android:layout_height="17dp"
+        android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
