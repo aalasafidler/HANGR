@@ -2,6 +2,7 @@ package com.hangr.hangr;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class CreateOutfit extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_outfit);
+        getSupportActionBar().setTitle("Create an Outfit");
 
         // Dealing with the tops
         TextView tops_text = findViewById(R.id.tops_text);
@@ -39,6 +41,12 @@ public class CreateOutfit extends AppCompatActivity{
         shoes_carousel = (CarouselView) findViewById(R.id.shoes_carousel);
         shoes_carousel.setPageCount(shoes_images.length);
         shoes_carousel.setImageListener(shoes_Listener);
+    }
+    //https://www.youtube.com/watch?v=kknBxoCOYXI
+    @Override
+            public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.outfits_menu, menu);
+        return true;
     }
 
     ImageListener tops_Listener = new ImageListener() {

@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".NewItem"></activity>
         <activity android:name=".CreateOutfit"></activity>
+        <activity android:name=".SavedOutfits"></activity>
     </application>
 
 </manifest>

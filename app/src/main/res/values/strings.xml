@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Hangr</string>
+    <string name="viewSavedOutfits">View Saved Outfits</string>
     <color name="bg">#F4DBD8</color>
     
     <string-array name="categories">
