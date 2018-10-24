@@ -21,9 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewItem"></activity>
-        <activity android:name=".CreateOutfit"></activity>
-        <activity android:name=".SavedOutfits"></activity>
+        <activity android:name=".NewItem"
+            android:parentActivityName=".StartUp" />
+
+        <activity android:name=".CreateOutfit"
+            android:parentActivityName=".StartUp" />
+
+        <activity android:name=".SavedOutfits"
+            android:parentActivityName=".CreateOutfit" />
     </application>
 
 </manifest>

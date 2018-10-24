@@ -8,6 +8,12 @@
         android:title="@string/action_favorite"
         app:showAsAction="ifRoom"/>
 
+    <!--<item-->
+        <!--android:id="@+id/go_back_arrow"-->
+        <!--android:icon="@drawable/gobackarrow"-->
+        <!--android:title="@string/go_back"-->
+        <!--app:showAsAction="ifRoom"/>-->
+
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/go_back"
         android:title="@string/action_settings"
