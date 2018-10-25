@@ -26,8 +26,6 @@
         <activity android:name=".NewItem"
             android:parentActivityName=".StartUp" />
 
-        <activity android:name=".Camera"/>
-
         <activity android:name=".CreateOutfit"
             android:parentActivityName=".StartUp" />
 
