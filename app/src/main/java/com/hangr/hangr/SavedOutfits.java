@@ -1,6 +1,7 @@
 package com.hangr.hangr;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,7 +68,7 @@ public class SavedOutfits extends AppCompatActivity {
     }
 
     public void openCamera() {
-        Intent camera_intent = new Intent(this, Camera.class);
+        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivity(camera_intent);
     }
 }
