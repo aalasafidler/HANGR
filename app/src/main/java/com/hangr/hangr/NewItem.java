@@ -88,7 +88,11 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         if (lightMeasurement < 10) {
             String text = "Room too dark, lux: " + lightMeasurement;
             Toast.makeText(NewItem.this, text, Toast.LENGTH_SHORT).show();
+
+            // Unregister the listener so it doesn't constantly use resources, not essential to run constantly
+            mSensorManager.unregisterListener(this);
         }
+
     }
 
     @Override
