@@ -4,58 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@color/blue_background"
     tools:context=".StartUp">
 
     <Button
         android:id="@+id/newItemButton"
-        android:layout_width="237dp"
-        android:layout_height="146dp"
-        android:layout_marginTop="52dp"
+        android:layout_width="193dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/wardrobe_button"
         android:text="Wardrobe"
         android:textColor="#ffffff"
-        android:textSize="40dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/outfitButton"
-        android:layout_width="237dp"
-        android:layout_height="146dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="193dp"
+        android:layout_height="89dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/outfit_button"
         android:text="Outfits"
         android:textColor="#ffffff"
-        android:textSize="40dp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newItemButton" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
-        android:layout_marginTop="80dp"
-        android:singleLine="false"
-        android:text="Hangr"
-        android:textColor="#000000"
-        android:textSize="46sp"
-        app:layout_constraintBottom_toTopOf="@+id/newItemButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="96dp"
+        android:layout_width="33dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="56dp"
         android:clickable="true"
+        app:backgroundTint="@color/design_default_color_primary"
         app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="@+id/outfitButton"
         app:layout_constraintTop_toTopOf="@+id/outfitButton"
@@ -63,15 +47,28 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="96dp"
+        android:layout_width="31dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="60dp"
         android:clickable="true"
+        app:backgroundTint="@color/design_default_color_primary"
         app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="@+id/newItemButton"
         app:layout_constraintTop_toTopOf="@+id/newItemButton"
         app:srcCompat="@drawable/ic_add_white" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="277dp"
+        android:layout_height="197dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="Hangr Logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
     <!--<Button-->
         <!--android:id="@+id/aalasaButton"-->

@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +60,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
             public void onClick(View v) {
                 Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File file = getFile();
+                System.out.println("File: " + file);
                 camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(NewItem.this,
                         BuildConfig.APPLICATION_ID + ".provider",
                         file));
@@ -112,7 +114,11 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
     private File getFile(){
         // Makes directory and filename for picture to be saved
-        File folder = new File("sdcard/camera-app");
+        File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        System.out.println("Folder: " + folder);
+
+
+//        File folder = new File("sdcard/camera-app");
         if(!folder.exists()){
             folder.mkdir();
         }
