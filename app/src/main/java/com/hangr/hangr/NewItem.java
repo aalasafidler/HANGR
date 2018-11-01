@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -77,6 +79,31 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.add_item_menu, menu);
+        return true;
+    }
+
+    // This method controls what is done when menu items are selected.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.go_back:
+                goBack();
+                return true;
+
+            case R.id.view_gallery:
+                viewGallery();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+    @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
         // Do something here if sensor accuracy changes.
     }
@@ -138,6 +165,21 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    // When this method is run, Saved Outfits activity is opened.
+    public void goBack() {
+        Intent intent = new Intent(this, StartUp.class);
+        startActivity(intent);
+    }
+
+    // When this method is run, all saved items will be shown.
+    public void viewGallery() {
+        System.out.println("okokokokokokokokkokok");
+        Intent intent = new Intent(this, ViewAllItems.class);
+        System.out.println("okokokokokokokokkokok");
+        startActivity(intent);
 
     }
 }

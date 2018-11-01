@@ -1,15 +1,23 @@
 <resources>
     <string name="app_name">Hangr</string>
+
+    // Strings in StartUp
     <string name="viewSavedOutfits">View Saved Outfits</string>
+    <string name="wardrobe">Wardrobe</string>
+    <string name="outfits">Outfits</string>
+
+    // Strings in CreateOutfit
     <string name="tops">TOPS</string>
     <string name="bottoms">BOTTOMS</string>
     <string name="shoes">SHOES</string>
-    <string name="action_favorite">action_favourite</string>
-    <string name="action_settings">Go back</string>
-    <string name="action_settings2">View saved items</string>
-    <string name="action_settings3">Settings</string>
+
+    // Strings in use in menus
     <string name="go_back">Go back</string>
+    <string name="settings">Settings</string>
     <string name="go_to_camera">Camera</string>
+    <string name="view_gallery">View all saved items</string>
+    <string name="view_saved_outfits">View saved outfits</string>
+
 
     <string-array name="categories">
         <item>Top</item>

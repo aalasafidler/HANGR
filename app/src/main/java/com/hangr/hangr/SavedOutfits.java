@@ -70,6 +70,7 @@ public class SavedOutfits extends AppCompatActivity {
     public void openCamera() {
         Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivity(camera_intent);
+
     }
 }
 

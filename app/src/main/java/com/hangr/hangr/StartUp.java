@@ -11,7 +11,7 @@ import android.widget.Button;
 public class StartUp extends AppCompatActivity {
     private Button button;
     private Button outfitButton;
-//    private Button aalasaButton;
+    //private Button v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +73,7 @@ public class StartUp extends AppCompatActivity {
     }
 
     public void openCreateOutfitActivity() {
-        //Intent intent = new Intent(this, CreateOutfit.class);
-        Intent intent = new Intent(this, ViewAllItems.class);
+        Intent intent = new Intent(this, CreateOutfit.class);
         startActivity(intent);
     }
 }

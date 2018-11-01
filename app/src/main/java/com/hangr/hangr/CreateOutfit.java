@@ -56,21 +56,22 @@ public class CreateOutfit extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.go_back:
-//                goBack();
-//                return true;
 
-            case R.id.view_saved_items:
+            case R.id.view_saved_outfits:
                 openSavedOutfits();
                 return true;
 
             case R.id.settings:
                 openSavedOutfits();
                 return true;
-//
-//            case R.id.action_favorite:
-//                openSavedOutfits();
-//                return true;
+
+            case R.id.go_back:
+              goBack();
+                return true;
+
+            case R.id.view_gallery:
+                viewGallery();
+                return true;
 
             default:
                 // If we got here, the user's action was not recognized.
@@ -78,6 +79,15 @@ public class CreateOutfit extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
 
         }
+
+
+    }
+
+    public void viewGallery(){
+        System.out.println("okokokokokokokokkokok");
+        Intent intent = new Intent(this, ViewAllItems.class);
+        System.out.println("okokokokokokokokkokok");
+        startActivity(intent);
     }
 
     // When run opens Saved Outfits activity.
@@ -113,13 +123,4 @@ public class CreateOutfit extends AppCompatActivity{
         }
     };
 
-///////// TOASTS
-//    public void toastMsg(String msg) {
-//        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-//        toast.show();
-//    }
-//
-//    public void displayOutfitSavedToast(View v) {
-//        toastMsg("No settings panel currently exists.");
-//    }
 }
