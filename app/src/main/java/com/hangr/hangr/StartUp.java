@@ -73,7 +73,8 @@ public class StartUp extends AppCompatActivity {
     }
 
     public void openCreateOutfitActivity() {
-        Intent intent = new Intent(this, CreateOutfit.class);
+        //Intent intent = new Intent(this, CreateOutfit.class);
+        Intent intent = new Intent(this, ViewAllItems.class);
         startActivity(intent);
     }
 }

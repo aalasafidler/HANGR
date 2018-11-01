@@ -9,6 +9,7 @@
 
     <uses-feature android:name="android.hardware.camera"></uses-feature>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,9 +25,6 @@
             </intent-filter>
         </activity>
 
-        <!--<activity android:name=".Launcher"-->
-            <!--android:theme="@style/AppTheme.Launcher"></>-->
-
         <activity android:name=".NewItem"
             android:parentActivityName=".StartUp" />
 
@@ -36,6 +34,8 @@
         <activity android:name=".SavedOutfits"
             android:parentActivityName=".CreateOutfit" />
 
+        <activity android:name=".ViewAllItems"
+            android:parentActivityName=".CreateOutfit" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
