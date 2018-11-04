@@ -18,7 +18,6 @@
     <string name="view_gallery">View all saved items</string>
     <string name="view_saved_outfits">View saved outfits</string>
 
-
     <string-array name="categories">
         <item>Top</item>
         <item>Jeans</item>

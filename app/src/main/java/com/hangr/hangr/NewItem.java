@@ -176,9 +176,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
     // When this method is run, all saved items will be shown.
     public void viewGallery() {
-        System.out.println("okokokokokokokokkokok");
         Intent intent = new Intent(this, ViewAllItems.class);
-        System.out.println("okokokokokokokokkokok");
         startActivity(intent);
 
     }
