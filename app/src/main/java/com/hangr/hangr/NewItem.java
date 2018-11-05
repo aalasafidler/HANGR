@@ -16,15 +16,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class NewItem extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SensorEventListener {
     Button camera_button;
+    Button save_button;
+    Spinner Category;
+    EditText Location;
+    Spinner Style;
     static final int CAM_REQUEST = 1;
 
     private SensorManager mSensorManager;
@@ -40,14 +46,14 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
 
         //Initialises style dropdown menu
-        Spinner spinner1 = findViewById(R.id.styleSpinner);
+        Spinner spinner1 = findViewById(R.id.style_spinner);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter1);
         spinner1.setOnItemSelectedListener(this);
 
         //Initialises category dropdown menu
-        Spinner spinner2 = findViewById(R.id.categorySpinner);
+        Spinner spinner2 = findViewById(R.id.category_spinner);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.styles, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2.setAdapter(adapter2);
@@ -72,6 +78,32 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
             }
         });
 
+        save_button = (Button) findViewById(R.id.save_button);
+
+        Category = findViewById(R.id.category_spinner);
+        Location = findViewById(R.id.location_edittext);
+        Style = findViewById(R.id.style_spinner);
+
+        save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String category = Category.getSelectedItem().toString();
+                String location = Location.getText().toString();
+                String style = Style.getSelectedItem().toString();
+
+                WardrobeItem wardrobeItem = new WardrobeItem();
+                wardrobeItem.setCategory(category);
+                wardrobeItem.setLocation(location);
+                wardrobeItem.setStyle(style);
+
+                StartUp.wardrobeItemDatabase.wardrobeItemDao().addItem(wardrobeItem);
+                Toast.makeText(NewItem.this, "Item added successfully!", Toast.LENGTH_SHORT).show();
+
+                Category.setSelection(0, true);
+                Location.setText("");
+                Style.setSelection(0, true);
+            }
+        });
         // Light Sensor
         mSensorManager = (SensorManager) getSystemService(NewItem.SENSOR_SERVICE);
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);

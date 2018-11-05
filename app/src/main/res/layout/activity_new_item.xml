@@ -64,7 +64,7 @@
         />
 
     <Spinner
-        android:id="@+id/categorySpinner"
+        android:id="@+id/category_spinner"
         android:layout_width="161dp"
         android:layout_height="32dp"
         android:layout_marginStart="14dp"
@@ -93,7 +93,7 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_blue_bright"
         app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/styleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/style_spinner" />
 
     <Button
         android:id="@+id/button2"
@@ -104,7 +104,7 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_orange_dark"
         app:layout_constraintEnd_toStartOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/styleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/style_spinner" />
 
     <Button
         android:id="@+id/button4"
@@ -115,7 +115,7 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_green_light"
         app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/styleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/style_spinner" />
 
     <Button
         android:id="@+id/button3"
@@ -126,7 +126,7 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_green_dark"
         app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/styleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/style_spinner" />
 
     <Button
         android:id="@+id/button5"
@@ -137,7 +137,7 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_orange_light"
         app:layout_constraintEnd_toStartOf="@+id/button7"
-        app:layout_constraintTop_toBottomOf="@+id/styleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/style_spinner" />
 
     <Button
         android:id="@+id/button6"
@@ -172,7 +172,7 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_red_dark"
         app:layout_constraintEnd_toStartOf="@+id/button10"
-        app:layout_constraintTop_toBottomOf="@+id/styleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/style_spinner" />
 
     <Button
         android:id="@+id/button7"
@@ -183,20 +183,20 @@
         android:layout_marginTop="24dp"
         android:background="@android:color/holo_purple"
         app:layout_constraintEnd_toStartOf="@+id/button8"
-        app:layout_constraintTop_toBottomOf="@+id/styleSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/style_spinner" />
 
     <Spinner
-        android:id="@+id/styleSpinner"
+        android:id="@+id/style_spinner"
         android:layout_width="161dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="14dp"
         android:background="#ffffff"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/location_edittext" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/location_edittext"
         android:layout_width="154dp"
         android:layout_height="38dp"
         android:layout_marginStart="14dp"
@@ -205,7 +205,7 @@
         android:inputType="textPersonName"
         android:text="Name"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
 
     <TextView
         android:id="@+id/textView6"
@@ -243,12 +243,12 @@
         android:layout_marginBottom="32dp"
         android:background="#BF9892"
         android:elevation="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/button11"
+        app:layout_constraintBottom_toTopOf="@+id/save_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/save_button"
         android:layout_width="108dp"
         android:layout_height="54dp"
         android:layout_marginBottom="40dp"
@@ -269,7 +269,7 @@
         android:layout_marginStart="64dp"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button11"
+        app:layout_constraintEnd_toStartOf="@+id/save_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

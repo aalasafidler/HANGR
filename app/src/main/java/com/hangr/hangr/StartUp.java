@@ -1,13 +1,18 @@
 package com.hangr.hangr;
 
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,12 +26,15 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class StartUp extends AppCompatActivity {
     private Button button;
     private Button outfitButton;
+    private Button viewItemsButton;
     private TextView weatherInfoTextView;
     private TextView tempTextView;
+    public static WardrobeItemDatabase wardrobeItemDatabase;
     //private Button v;
 
     @Override
@@ -37,6 +45,10 @@ public class StartUp extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start_up);
+
+        //Build database
+        wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(),WardrobeItemDatabase.class,"itemsdb.db").allowMainThreadQueries().build();
+
 
         hideNavigationBar();
         button = findViewById(R.id.newItemButton);
@@ -65,6 +77,28 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
+        viewItemsButton = findViewById(R.id.print_items_button);
+        viewItemsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<WardrobeItem> items = StartUp.wardrobeItemDatabase.wardrobeItemDao().getItems();
+
+                String info = "ID\tcategory\tlocation\tstyle\n\n";
+
+                for (WardrobeItem item : items) {
+                    int id = item.getId();
+                    String category = item.getCategory();
+                    String location = item.getLocation();
+                    String style = item.getStyle();
+
+                    info += id + "\t" + category + "\t" + location + "\t" + style + "\n";
+                }
+
+                Toast.makeText(StartUp.this, "Check terminal in android studio.", Toast.LENGTH_SHORT).show();
+                System.out.println(info);
+            }
+        });
+
         findWeather();
     }
 
@@ -86,9 +120,9 @@ public class StartUp extends AppCompatActivity {
 //                    double centi = (temp_int - 32) / 1.800;
 //                    centi = Math.round(centi);
 //                    int i = (int)centi;
-                    tempTextView.setText("Teh temp will be" + temp_int + "celsius");
+                    tempTextView.setText("The temp will be " + temp_int + " celsius");
 
-                }catch(JSONException e){
+                }catch(JSONException e) {
                     e.printStackTrace();
                 }
 
