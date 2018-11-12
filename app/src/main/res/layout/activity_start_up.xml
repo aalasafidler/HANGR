@@ -24,27 +24,15 @@
     <Button
         android:id="@+id/outfitButton"
         android:layout_width="193dp"
-        android:layout_height="89dp"
+        android:layout_height="91dp"
         android:layout_marginTop="44dp"
         android:background="@drawable/outfit_button"
-        android:text="Outfits"
+        android:text="Create Outfit"
         android:textColor="#ffffff"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newItemButton" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
-        android:layout_width="33dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="56dp"
-        android:clickable="true"
-        app:backgroundTint="@color/design_default_color_primary"
-        app:fabSize="mini"
-        app:layout_constraintEnd_toEndOf="@+id/outfitButton"
-        app:layout_constraintTop_toTopOf="@+id/outfitButton"
-        app:srcCompat="@drawable/ic_add_white" />
 
     <ImageView
         android:id="@+id/imageView"

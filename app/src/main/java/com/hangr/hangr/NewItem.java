@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class NewItem extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SensorEventListener {
+    // Layout elements
     Button cancel_button;
     Button save_button;
     Spinner Category;
@@ -39,10 +40,14 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
     CheckBox Clean;
     ImageView Preview;
     Bitmap previewBitmap;
-    private static File mostRecentPic;
 
+
+    // Sensor
     private SensorManager mSensorManager;
     private Sensor mLight;
+
+    // Getters and setters for most recent picture taken by the user
+    private static File mostRecentPic;
 
     public static void setMostRecentPic(File file) {
         mostRecentPic = file;
@@ -58,9 +63,6 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
         getSupportActionBar().setTitle("Add New Item");
-
-        System.out.println("Most recent pic: " + getMostRecentPic().toString());
-
 
         //Initialises style dropdown menu
         Spinner spinner1 = findViewById(R.id.style_spinner);
@@ -88,25 +90,26 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         Preview = findViewById(R.id.preview_imageview);
         Preview.setImageBitmap(previewBitmap);
 
-        save_button = (Button) findViewById(R.id.save_button);
-
+        // Initialise save button and layout elements you want to save information from
+        save_button = findViewById(R.id.save_button);
         Category = findViewById(R.id.category_spinner);
         Location = findViewById(R.id.location_edittext);
         Style = findViewById(R.id.style_spinner);
         Colour = findViewById(R.id.colour_spinner);
         Clean = findViewById(R.id.clean_checkbox);
 
+        // Saves item info to database when save button is clicked
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Collect options chosen from spinners etc.
+                // Collect values chosen from spinners etc.
                 String category = Category.getSelectedItem().toString();
                 String location = Location.getText().toString();
                 String style = Style.getSelectedItem().toString();
                 String colour = Colour.getSelectedItem().toString();
                 boolean clean = Clean.isChecked();
 
-                // Save the options chosen for the item
+                // Save the values chosen for the item
                 WardrobeItem wardrobeItem = new WardrobeItem();
                 wardrobeItem.setCategory(category);
                 wardrobeItem.setLocation(location);
@@ -120,7 +123,8 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 StartUp.wardrobeItemDatabase.wardrobeItemDao().addItem(wardrobeItem);
                 Toast.makeText(NewItem.this, "Item added successfully!", Toast.LENGTH_SHORT).show();
 
-                // Reset the spinners to default values
+                // Resets the spinners to default values
+                // TODO: Bring user back to start page when an item is added? Or to the view item page
                 Category.setSelection(0, true);
                 Location.setText("");
                 Style.setSelection(0, true);
@@ -128,7 +132,8 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 Clean.setChecked(false);
             }
         });
-        // Light Sensor
+
+        // Initialise Light Sensor
         mSensorManager = (SensorManager) getSystemService(NewItem.SENSOR_SERVICE);
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
@@ -165,9 +170,9 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     @Override
+    // Gets the light measurement from light sensor
     public final void onSensorChanged(SensorEvent event) {
         float lightMeasurement = event.values[0];
-        // Do something with this sensor data.
 
         // If lux measurement is below 10 the phone is in darkness, display toast to move to brighter room
         if (lightMeasurement < 10) {
@@ -196,9 +201,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // Activates toast when dropdown is selected.
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
