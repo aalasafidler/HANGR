@@ -92,6 +92,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
         // Initialise save button and layout elements you want to save information from
         save_button = findViewById(R.id.save_button);
+        cancel_button = findViewById(R.id.cancel_button);
         Category = findViewById(R.id.category_spinner);
         Location = findViewById(R.id.location_edittext);
         Style = findViewById(R.id.style_spinner);
@@ -137,7 +138,16 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         mSensorManager = (SensorManager) getSystemService(NewItem.SENSOR_SERVICE);
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
-    }
+        cancel_button.setOnClickListener(new View.OnClickListener() {it 
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent i = new Intent(getApplicationContext(),StartUp.class);
+                startActivity(i);
+            }
+        });
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
