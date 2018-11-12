@@ -7,5 +7,7 @@
     <color name="colorAccent">#5BB9A4</color>
     <color name="bg">#F4DBD8</color>
     <color name="light_blue">#E4FCF6</color>
+    <color name="faded_blue">#9EAEAA</color>
+    <color name="light_grey">#E4FCF6</color>
 
 </resources>

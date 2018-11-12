@@ -138,7 +138,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         mSensorManager = (SensorManager) getSystemService(NewItem.SENSOR_SERVICE);
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
-        cancel_button.setOnClickListener(new View.OnClickListener() {it 
+        cancel_button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

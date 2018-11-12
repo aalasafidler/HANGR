@@ -2,9 +2,14 @@ package com.hangr.hangr;
 
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -102,12 +107,25 @@ public class StartUp extends AppCompatActivity {
 
         // Initialise weather and temperature textviews, fill them with weather info
         weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
-        findWeather();
-    }
 
+        if (isNetworkAvailable() == true) {
+            findWeather();
+        }
+        else{
+            weatherInfoTextView.setTextColor(this.getResources().getColor(R.color.faded_blue));
+            weatherInfoTextView.setText("Weather information not available");
+        }
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
     public void findWeather() {
         String url = "http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&appid=4acded150a8a59a5e4a0a894906adf09&units=metric";
         // Send GET request to openweathermap
+
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -147,8 +165,7 @@ public class StartUp extends AppCompatActivity {
         });
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(jor);
-    }
+        queue.add(jor);}
 
     @Override
     protected void onResume() {
