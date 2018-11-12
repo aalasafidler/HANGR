@@ -102,7 +102,6 @@ public class StartUp extends AppCompatActivity {
 
         // Initialise weather and temperature textviews, fill them with weather info
         weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
-        tempTextView = findViewById(R.id.tempTextView);
         findWeather();
     }
 
@@ -119,11 +118,21 @@ public class StartUp extends AppCompatActivity {
                     JSONObject object = array.getJSONObject(0);
                     String temp = String.valueOf(main_object.getDouble("temp"));
                     String description = object.getString("description");
-
-                    weatherInfoTextView.setText("The weather will be: " + description);
-
                     double temp_int = Double.parseDouble(temp);
-                    tempTextView.setText("The temp will be " + temp_int + " celsius");
+
+                    if (temp_int > 15){
+                        weatherInfoTextView.setText("It will be warm today with " + description + " and temperatures of " + temp_int + "°C");
+                    } else if (temp_int < 15 && temp_int > 10) {
+                        weatherInfoTextView.setText("It will be mild today with " + description + " and temperatures of " + temp_int + "°C");
+                    } else if (temp_int < 10 && temp_int > 6) {
+                        weatherInfoTextView.setText("It will be cold today with " + description + " and temperatures of " + temp_int + "°C. Wrap up!");
+                    } else if (description == "broken clouds") {
+                        weatherInfoTextView.setText("It will be cloudy today with temperatures around " + temp_int + "°C");
+                    } else{
+                        weatherInfoTextView.setText("Wrap up warm today as it will be cold, temperatures just " + temp_int + "°C");
+                    }
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
