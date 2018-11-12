@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 public class StartUp extends AppCompatActivity {
+    // Initialise elements on the startup activity
     private Button newItemButton;
     private Button outfitButton;
     private Button viewItemsButton;
@@ -50,14 +50,13 @@ public class StartUp extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start_up);
+        // Hide navbar
+        hideNavigationBar();
 
         //Build database
         wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(), WardrobeItemDatabase.class, "itemsdb.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        // Hide navbar
-        hideNavigationBar();
-
-
+        // Opens camera when add item clicked
         newItemButton = findViewById(R.id.newItemButton);
         newItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +65,7 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
-
-        weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
-        tempTextView = findViewById(R.id.tempTextView);
-
+        // Opens create outfit screen when clicked
         outfitButton = findViewById(R.id.outfitButton);
         outfitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +74,7 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
+        // Workaround for viewing items in the database, click button to print items to console in Android Studio
         viewItemsButton = findViewById(R.id.print_items_button);
         viewItemsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,15 +100,20 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
+        // Initialise weather and temperature textviews, fill them with weather info
+        weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
+        tempTextView = findViewById(R.id.tempTextView);
         findWeather();
     }
 
     public void findWeather() {
         String url = "http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&appid=4acded150a8a59a5e4a0a894906adf09&units=metric";
+        // Send GET request to openweathermap
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    // Pick apart the JSON response
                     JSONObject main_object = response.getJSONObject("main");
                     JSONArray array = response.getJSONArray("weather");
                     JSONObject object = array.getJSONObject(0);
@@ -158,14 +160,19 @@ public class StartUp extends AppCompatActivity {
     }
 
     public void openNewItemActivity() {
+        // Creates intent to take a picture
         Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Initialise the file that the picture you take will be saved into
         File file = getFile();
         System.out.println("File: " + file);
+
+        // Saves the picture you took into the file
         camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(StartUp.this,
                 BuildConfig.APPLICATION_ID + ".provider",
                 file));
 
-
+        // Keeps track of the most recent picture taken by the user
         NewItem.setMostRecentPic(file);
         startActivityForResult(camera_intent, CAM_REQUEST);
     }
@@ -183,6 +190,8 @@ public class StartUp extends AppCompatActivity {
         if (!folder.exists()) {
             folder.mkdir();
         }
+
+        // Creates collision resistant filename for the image using timestamp
         String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new Date());
         String imageFileName = "Hangr_" + timeStamp + ".jpg";
 
@@ -192,12 +201,15 @@ public class StartUp extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // This method is called when you return from taking the picture
+        // Sends the user to the new item screen, not back to the start screen
+
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("Request: " + requestCode);
         System.out.println("Request: " + resultCode);
 
         // 1 is the code when returning from the camera
-        // Bring user to new item page after picture is taken
+        // Starts the NewItem activity after picture is taken
         if (requestCode == 1) {
             Intent home = new Intent(StartUp.this, NewItem.class
             );

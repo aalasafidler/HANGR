@@ -1,34 +1,32 @@
 package com.hangr.hangr;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CreateOutfit extends AppCompatActivity{
 
     CarouselView tops_carousel, bottoms_carousel, shoes_carousel;
+//    Bitmap picture = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/com.hangr.hangr/files/Pictures/Hangr_20181112__140519.jpg");
 
-    //Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/camera-app/Hangr_20181025__143243.jpg");
+    public static WardrobeItemDatabase wardrobeItemDatabase;
 
-
-    int[] tops_images = {R.drawable.t083263large, R.drawable.t3539717726366large, R.drawable.t5397177446928large, R.drawable.t35397121456317large, R.drawable.t35397175921984large};
-    int[] bottoms_images = {R.drawable.b35397177259627large, R.drawable.b5397177424742large, R.drawable.b3539717742438large};
-    int[] shoes_images = {R.drawable.s3539717635451large, R.drawable.s35397172277367large, R.drawable.s35397176100838large, R.drawable.s35397176103853large, R.drawable.s35397176433110large};
+    List<Bitmap> tops_images = new ArrayList<>();
+    List<Bitmap> bottoms_images = new ArrayList<>();
+    List<Bitmap> shoes_images = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -36,34 +34,46 @@ public class CreateOutfit extends AppCompatActivity{
         setContentView(R.layout.create_outfit);
         getSupportActionBar().setTitle("Create an Outfit");
 
-        // Scroll view for tops
-        LinearLayout topsGallery = findViewById(R.id.tops_gallery);
+        wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(), WardrobeItemDatabase.class, "itemsdb.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        LayoutInflater inflater = LayoutInflater.from(CreateOutfit.this);
+        List<WardrobeItem> items = CreateOutfit.wardrobeItemDatabase.wardrobeItemDao().getItems();
 
-        for (int i = 0; i < 6; i++) {
-            View view = inflater.inflate(R.layout.tops_items, topsGallery, false);
+        for (WardrobeItem item : items) {
+            String style = item.getStyle();
+            Bitmap picture = BitmapFactory.decodeFile(item.getImageFilePath());
 
-            ImageView topsImageView = view.findViewById(R.id.tops_imageview);
-
-            topsImageView.setImageResource(R.drawable.logo);
-            topsGallery.addView(view);
-
+            switch (style) {
+                case "Tops":
+                    tops_images.add(picture);
+                    break;
+                case "Bottoms":
+                    bottoms_images.add(picture);
+                    break;
+                case "Shoes":
+                    shoes_images.add(picture);
+                    break;
+                default:
+                    System.out.println("Error matching style.");
+            }
         }
 
-        // Dealing with the bottoms
-        TextView bottoms_text = findViewById(R.id.bottoms_text);
-        bottoms_carousel = (CarouselView) findViewById(R.id.bottoms_carousel);
-        bottoms_carousel.setPageCount(bottoms_images.length);
+        // Initialise the carousel views
+        tops_carousel = findViewById(R.id.tops_carousel);
+        bottoms_carousel = findViewById(R.id.bottoms_carousel);
+        shoes_carousel = findViewById(R.id.shoes_carousel);
+
+        // Set the page count and listeners for each carousel
+        tops_carousel.setPageCount(tops_images.size());
+        tops_carousel.setImageListener(tops_Listener);
+
+        bottoms_carousel.setPageCount(bottoms_images.size());
         bottoms_carousel.setImageListener(bottoms_Listener);
 
-        // Dealing with the shoes
-        TextView shoes_text = findViewById(R.id.shoes_text);
-        shoes_carousel = (CarouselView) findViewById(R.id.shoes_carousel);
-        shoes_carousel.setPageCount(shoes_images.length);
+        shoes_carousel.setPageCount(shoes_images.size());
         shoes_carousel.setImageListener(shoes_Listener);
+
     }
-//    //https://www.youtube.com/watch?v=kknBxoCOYXI
+
     @Override
             public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.outfits_menu, menu);
@@ -120,21 +130,21 @@ public class CreateOutfit extends AppCompatActivity{
     ImageListener tops_Listener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(tops_images[position]);
+            imageView.setImageBitmap(tops_images.get(position));
         }
     };
 
     ImageListener bottoms_Listener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(bottoms_images[position]);
+            imageView.setImageBitmap(bottoms_images.get(position));
         }
     };
 
     ImageListener shoes_Listener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(shoes_images[position]);
+            imageView.setImageBitmap(shoes_images.get(position));
         }
     };
 

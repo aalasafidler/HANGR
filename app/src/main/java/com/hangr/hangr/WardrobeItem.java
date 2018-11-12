@@ -5,7 +5,9 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "items")
 public class WardrobeItem {
+    // These instance variables are the columns of the database
 
+    // autoGenerate: Increments ID every time an item is added, 1, 2, ...
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -21,9 +23,11 @@ public class WardrobeItem {
 
     private String imageFilePath;
 
+    // Default constructor
     public WardrobeItem() {
     }
 
+    // Getters and setters are used to get the value of a column or set the values of the columns when you add a new row
     public int getId() {
         return id;
     }
