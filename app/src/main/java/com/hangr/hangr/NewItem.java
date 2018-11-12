@@ -1,6 +1,8 @@
 package com.hangr.hangr;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,7 +18,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -26,23 +30,36 @@ import java.util.Date;
 import java.util.Locale;
 
 public class NewItem extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SensorEventListener {
-    Button camera_button;
+    Button cancel_button;
     Button save_button;
     Spinner Category;
     EditText Location;
     Spinner Style;
-    static final int CAM_REQUEST = 1;
+    Spinner Colour;
+    CheckBox Clean;
+    ImageView Preview;
+    Bitmap previewBitmap;
+    private static File mostRecentPic;
 
     private SensorManager mSensorManager;
     private Sensor mLight;
 
-    // test push
+    public static void setMostRecentPic(File file) {
+        mostRecentPic = file;
+    }
+
+    public static File getMostRecentPic() {
+        return mostRecentPic;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
         getSupportActionBar().setTitle("Add New Item");
+
+        System.out.println("Most recent pic: " + getMostRecentPic().toString());
 
 
         //Initialises style dropdown menu
@@ -59,49 +76,56 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         spinner2.setAdapter(adapter2);
         spinner2.setOnItemSelectedListener(this);
 
-        // Camera button
-        camera_button = (Button) findViewById(R.id.camera_button);
+        //Initialises colours dropdown menu
+        Spinner spinner3 = findViewById(R.id.colour_spinner);
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this, R.array.colours, android.R.layout.simple_spinner_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner3.setAdapter(adapter3);
+        spinner3.setOnItemSelectedListener(this);
 
-        // Opens Camera on click, saves picture to sdcard
-        camera_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File file = getFile();
-                System.out.println("File: " + file);
-                camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(NewItem.this,
-                        BuildConfig.APPLICATION_ID + ".provider",
-                        file));
-
-
-                startActivityForResult(camera_intent, CAM_REQUEST);
-            }
-        });
+        // Display preview of the image you just took
+        previewBitmap = BitmapFactory.decodeFile(mostRecentPic.getAbsolutePath());
+        Preview = findViewById(R.id.preview_imageview);
+        Preview.setImageBitmap(previewBitmap);
 
         save_button = (Button) findViewById(R.id.save_button);
 
         Category = findViewById(R.id.category_spinner);
         Location = findViewById(R.id.location_edittext);
         Style = findViewById(R.id.style_spinner);
+        Colour = findViewById(R.id.colour_spinner);
+        Clean = findViewById(R.id.clean_checkbox);
 
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Collect options chosen from spinners etc.
                 String category = Category.getSelectedItem().toString();
                 String location = Location.getText().toString();
                 String style = Style.getSelectedItem().toString();
+                String colour = Colour.getSelectedItem().toString();
+                boolean clean = Clean.isChecked();
 
+                // Save the options chosen for the item
                 WardrobeItem wardrobeItem = new WardrobeItem();
                 wardrobeItem.setCategory(category);
                 wardrobeItem.setLocation(location);
                 wardrobeItem.setStyle(style);
+                wardrobeItem.setColour(colour);
+                wardrobeItem.setClean(clean);
+                // Saves file path of most recent image as a String
+                wardrobeItem.setImageFilePath(mostRecentPic.getAbsolutePath());
 
+                // Save the item to the database
                 StartUp.wardrobeItemDatabase.wardrobeItemDao().addItem(wardrobeItem);
                 Toast.makeText(NewItem.this, "Item added successfully!", Toast.LENGTH_SHORT).show();
 
+                // Reset the spinners to default values
                 Category.setSelection(0, true);
                 Location.setText("");
                 Style.setSelection(0, true);
+                Colour.setSelection(0, true);
+                Clean.setChecked(false);
             }
         });
         // Light Sensor
@@ -145,7 +169,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         float lightMeasurement = event.values[0];
         // Do something with this sensor data.
 
-        // If lux measurement is below the phone is in darkness, display toast to move to brighter room
+        // If lux measurement is below 10 the phone is in darkness, display toast to move to brighter room
         if (lightMeasurement < 10) {
             String text = "Room too dark, lux: " + lightMeasurement;
             Toast.makeText(NewItem.this, text, Toast.LENGTH_SHORT).show();
@@ -170,27 +194,9 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         mSensorManager.unregisterListener(this);
     }
 
-
-    private File getFile(){
-        // Makes directory and filename for picture to be saved
-        File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        System.out.println("Folder: " + folder);
-
-
-//        File folder = new File("sdcard/camera-app");
-        if(!folder.exists()){
-            folder.mkdir();
-        }
-        String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new Date());
-        String imageFileName = "Hangr_" + timeStamp + ".jpg";
-
-        File image_file = new File(folder, imageFileName);
-        return image_file;
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //Activates toast when dropdown is selected.
+        // Activates toast when dropdown is selected.
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }

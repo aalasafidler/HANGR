@@ -1,12 +1,17 @@
 package com.hangr.hangr;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +23,9 @@ public class CreateOutfit extends AppCompatActivity{
 
     CarouselView tops_carousel, bottoms_carousel, shoes_carousel;
 
+    //Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/camera-app/Hangr_20181025__143243.jpg");
+
+
     int[] tops_images = {R.drawable.t083263large, R.drawable.t3539717726366large, R.drawable.t5397177446928large, R.drawable.t35397121456317large, R.drawable.t35397175921984large};
     int[] bottoms_images = {R.drawable.b35397177259627large, R.drawable.b5397177424742large, R.drawable.b3539717742438large};
     int[] shoes_images = {R.drawable.s3539717635451large, R.drawable.s35397172277367large, R.drawable.s35397176100838large, R.drawable.s35397176103853large, R.drawable.s35397176433110large};
@@ -28,11 +36,20 @@ public class CreateOutfit extends AppCompatActivity{
         setContentView(R.layout.create_outfit);
         getSupportActionBar().setTitle("Create an Outfit");
 
-        // Dealing with the tops
-        TextView tops_text = findViewById(R.id.tops_text);
-        tops_carousel = (CarouselView) findViewById(R.id.tops_carousel);
-        tops_carousel.setPageCount(tops_images.length);
-        tops_carousel.setImageListener(tops_Listener);
+        // Scroll view for tops
+        LinearLayout topsGallery = findViewById(R.id.tops_gallery);
+
+        LayoutInflater inflater = LayoutInflater.from(CreateOutfit.this);
+
+        for (int i = 0; i < 6; i++) {
+            View view = inflater.inflate(R.layout.tops_items, topsGallery, false);
+
+            ImageView topsImageView = view.findViewById(R.id.tops_imageview);
+
+            topsImageView.setImageResource(R.drawable.logo);
+            topsGallery.addView(view);
+
+        }
 
         // Dealing with the bottoms
         TextView bottoms_text = findViewById(R.id.bottoms_text);
@@ -84,9 +101,7 @@ public class CreateOutfit extends AppCompatActivity{
     }
 
     public void viewGallery(){
-        System.out.println("okokokokokokokokkokok");
         Intent intent = new Intent(this, ViewAllItems.class);
-        System.out.println("okokokokokokokokkokok");
         startActivity(intent);
     }
 

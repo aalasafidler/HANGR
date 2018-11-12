@@ -11,12 +11,13 @@
         android:id="@+id/newItemButton"
         android:layout_width="193dp"
         android:layout_height="91dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/wardrobe_button"
-        android:text="Wardrobe"
+        android:text="Add Item"
         android:textColor="#ffffff"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -43,18 +44,6 @@
         app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="@+id/outfitButton"
         app:layout_constraintTop_toTopOf="@+id/outfitButton"
-        app:srcCompat="@drawable/ic_add_white" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="31dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="60dp"
-        android:clickable="true"
-        app:backgroundTint="@color/design_default_color_primary"
-        app:fabSize="mini"
-        app:layout_constraintEnd_toEndOf="@+id/newItemButton"
-        app:layout_constraintTop_toTopOf="@+id/newItemButton"
         app:srcCompat="@drawable/ic_add_white" />
 
     <ImageView

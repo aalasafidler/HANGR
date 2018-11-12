@@ -15,6 +15,15 @@ public class WardrobeItem {
 
     private String style;
 
+    private String colour;
+
+    private boolean clean;
+
+    private String imageFilePath;
+
+    public WardrobeItem() {
+    }
+
     public int getId() {
         return id;
     }
@@ -45,5 +54,29 @@ public class WardrobeItem {
 
     public void setStyle(String style) {
         this.style = style;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public boolean getClean() {
+        return clean;
+    }
+
+    public void setClean(boolean clean) {
+        this.clean = clean;
+    }
+
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public void setImageFilePath(String filePath) {
+        this.imageFilePath = filePath;
     }
 }

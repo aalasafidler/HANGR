@@ -7,51 +7,29 @@
     android:layout_height="match_parent">
 
     // Dealing with tops
-    <TextView
-        android:id="@+id/tops_text"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/tops"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.synnapps.carouselview.CarouselView
-        android:id="@+id/tops_carousel"
-        android:layout_width="146dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="4dp"
-        app:autoPlay="false"
-        app:layout_constraintEnd_toStartOf="@+id/bottoms_text"
-        app:layout_constraintHorizontal_bias="0.447"
-        app:layout_constraintStart_toEndOf="@+id/shoes_text"
-        app:layout_constraintTop_toBottomOf="@+id/tops_text" />
 
     // Dealing with bottoms
+
     <TextView
         android:id="@+id/bottoms_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/bottoms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tops_carousel" />
+        tools:layout_editor_absoluteY="213dp" />
 
     <com.synnapps.carouselview.CarouselView
         android:id="@+id/bottoms_carousel"
-        android:layout_width="141dp"
-        android:layout_height="250dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="102dp"
+        android:layout_height="114dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:autoPlay="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottoms_text" />
 
@@ -79,6 +57,24 @@
         app:autoPlay="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shoes_text" />
+
+    <HorizontalScrollView
+        android:layout_width="368dp"
+        android:layout_height="197dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/tops_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 
 
 </android.support.constraint.ConstraintLayout>

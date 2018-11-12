@@ -3,6 +3,9 @@ package com.hangr.hangr;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,18 +27,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class StartUp extends AppCompatActivity {
-    private Button button;
+    private Button newItemButton;
     private Button outfitButton;
     private Button viewItemsButton;
     private TextView weatherInfoTextView;
     private TextView tempTextView;
     public static WardrobeItemDatabase wardrobeItemDatabase;
-    //private Button v;
+    static final int CAM_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +52,23 @@ public class StartUp extends AppCompatActivity {
         setContentView(R.layout.activity_start_up);
 
         //Build database
-        wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(),WardrobeItemDatabase.class,"itemsdb.db").allowMainThreadQueries().build();
+        wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(), WardrobeItemDatabase.class, "itemsdb.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-
+        // Hide navbar
         hideNavigationBar();
-        button = findViewById(R.id.newItemButton);
-        button.setOnClickListener(new View.OnClickListener() {
+
+
+        newItemButton = findViewById(R.id.newItemButton);
+        newItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewItemActivity();
             }
         });
+
+
         weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
         tempTextView = findViewById(R.id.tempTextView);
-
-//        aalasaButton = findViewById(R.id.aalasaButton);
-//        aalasaButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openCreateOutfitActivity();
-//            }
-//        });
 
         outfitButton = findViewById(R.id.outfitButton);
         outfitButton.setOnClickListener(new View.OnClickListener() {
@@ -83,15 +84,18 @@ public class StartUp extends AppCompatActivity {
             public void onClick(View v) {
                 List<WardrobeItem> items = StartUp.wardrobeItemDatabase.wardrobeItemDao().getItems();
 
-                String info = "ID\tcategory\tlocation\tstyle\n\n";
+                String info = "ID\tcategory\tlocation\tstyle\tcolour\tclean\timageFilePath\n\n";
 
                 for (WardrobeItem item : items) {
                     int id = item.getId();
                     String category = item.getCategory();
                     String location = item.getLocation();
                     String style = item.getStyle();
+                    String colour = item.getColour();
+                    String clean = Boolean.toString(item.getClean());
+                    String imageFilePath = item.getImageFilePath();
 
-                    info += id + "\t" + category + "\t" + location + "\t" + style + "\n";
+                    info += id + "\t" + category + "\t" + location + "\t" + style + "\t" + colour + "\t" + clean + "\t" + imageFilePath + "\n";
                 }
 
                 Toast.makeText(StartUp.this, "Check terminal in android studio.", Toast.LENGTH_SHORT).show();
@@ -102,12 +106,12 @@ public class StartUp extends AppCompatActivity {
         findWeather();
     }
 
-    public void findWeather(){
+    public void findWeather() {
         String url = "http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&appid=4acded150a8a59a5e4a0a894906adf09&units=metric";
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try{
+                try {
                     JSONObject main_object = response.getJSONObject("main");
                     JSONArray array = response.getJSONArray("weather");
                     JSONObject object = array.getJSONObject(0);
@@ -117,19 +121,16 @@ public class StartUp extends AppCompatActivity {
                     weatherInfoTextView.setText("The weather will be: " + description);
 
                     double temp_int = Double.parseDouble(temp);
-//                    double centi = (temp_int - 32) / 1.800;
-//                    centi = Math.round(centi);
-//                    int i = (int)centi;
                     tempTextView.setText("The temp will be " + temp_int + " celsius");
 
-                }catch(JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
-        }, new Response.ErrorListener(){
+        }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error){
+            public void onErrorResponse(VolleyError error) {
 
             }
         });
@@ -137,6 +138,7 @@ public class StartUp extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(jor);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -145,7 +147,7 @@ public class StartUp extends AppCompatActivity {
 
     }
 
-    private void hideNavigationBar(){
+    private void hideNavigationBar() {
         this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
@@ -156,12 +158,50 @@ public class StartUp extends AppCompatActivity {
     }
 
     public void openNewItemActivity() {
-        Intent intent = new Intent(this, NewItem.class);
-        startActivity(intent);
+        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = getFile();
+        System.out.println("File: " + file);
+        camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(StartUp.this,
+                BuildConfig.APPLICATION_ID + ".provider",
+                file));
+
+
+        NewItem.setMostRecentPic(file);
+        startActivityForResult(camera_intent, CAM_REQUEST);
     }
 
     public void openCreateOutfitActivity() {
         Intent intent = new Intent(this, CreateOutfit.class);
         startActivity(intent);
+    }
+
+    private File getFile() {
+        // Makes directory and filename for picture to be saved
+        File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        System.out.println("Folder: " + folder);
+
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new Date());
+        String imageFileName = "Hangr_" + timeStamp + ".jpg";
+
+        File image_file = new File(folder, imageFileName);
+        return image_file;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("Request: " + requestCode);
+        System.out.println("Request: " + resultCode);
+
+        // 1 is the code when returning from the camera
+        // Bring user to new item page after picture is taken
+        if (requestCode == 1) {
+            Intent home = new Intent(StartUp.this, NewItem.class
+            );
+            startActivity(home);
+        }
     }
 }
