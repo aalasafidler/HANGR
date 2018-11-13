@@ -23,9 +23,11 @@ public class WardrobeItem {
 
     private String imageFilePath;
 
+    private int mGridPosition;
+
     // Default constructor
-    public WardrobeItem() {
-    }
+//    public WardrobeItem() {
+//    }
 
     // Getters and setters are used to get the value of a column or set the values of the columns when you add a new row
     public int getId() {
@@ -82,5 +84,19 @@ public class WardrobeItem {
 
     public void setImageFilePath(String filePath) {
         this.imageFilePath = filePath;
+    }
+
+    public int getGridPosition() { return mGridPosition; }
+
+    public void setGridPosition(int gridPosition) { this.mGridPosition = gridPosition; }
+
+    public WardrobeItem(String category, String location, String style, String colour, boolean clean, int gridPosition)
+    {
+        this.category = category;
+        this.location = location;
+        this.style = style;
+        this.colour = colour;
+        this.clean = clean;
+        this.mGridPosition = gridPosition;
     }
 }

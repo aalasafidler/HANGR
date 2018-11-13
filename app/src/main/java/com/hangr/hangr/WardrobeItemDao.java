@@ -3,6 +3,8 @@ package com.hangr.hangr;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.lifecycle.LiveData;
+
 
 import java.util.List;
 
@@ -15,8 +17,10 @@ public interface WardrobeItemDao {
     @Insert
     public void addItem(WardrobeItem item);
 
+    @Query("DELETE FROM items")
+    void deleteAll();
+
     // Get every row from the db
     @Query("select * from items")
-    public List<WardrobeItem> getItems();
-
+    public LiveData<List<WardrobeItem>> getItems();
 }

@@ -109,14 +109,31 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 String style = Style.getSelectedItem().toString();
                 String colour = Colour.getSelectedItem().toString();
                 boolean clean = Clean.isChecked();
+                int gridPosition = 0;
+
+                switch (category) {
+                    case "Tops":
+                        gridPosition = 1;
+                        break;
+                    case "Bottoms":
+                        gridPosition = 2;
+                        break;
+                    case "Shoes":
+                        gridPosition = 3;
+                        break;
+                    default:
+                        break;
+                }
 
                 // Save the values chosen for the item
-                WardrobeItem wardrobeItem = new WardrobeItem();
-                wardrobeItem.setCategory(category);
-                wardrobeItem.setLocation(location);
-                wardrobeItem.setStyle(style);
-                wardrobeItem.setColour(colour);
-                wardrobeItem.setClean(clean);
+//                WardrobeItem wardrobeItem = new WardrobeItem();
+//                wardrobeItem.setCategory(category);
+//                wardrobeItem.setLocation(location);
+//                wardrobeItem.setStyle(style);
+//                wardrobeItem.setColour(colour);
+//                wardrobeItem.setClean(clean);
+                WardrobeItem wardrobeItem = new WardrobeItem(category, location, style, colour, clean, gridPosition);
+
                 // Saves file path of most recent image as a String
                 wardrobeItem.setImageFilePath(mostRecentPic.getAbsolutePath());
 
