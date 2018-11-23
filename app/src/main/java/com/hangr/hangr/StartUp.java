@@ -42,6 +42,7 @@ public class StartUp extends AppCompatActivity {
     private Button newItemButton;
     private Button outfitButton;
     private Button viewItemsButton;
+    private Button viewOutfitsButton;
     private TextView weatherInfoTextView;
     private TextView tempTextView;
     public static WardrobeItemDatabase wardrobeItemDatabase;
@@ -78,6 +79,16 @@ public class StartUp extends AppCompatActivity {
                 openCreateOutfitActivity();
             }
         });
+
+        // Opens the view all outfits activity
+        viewOutfitsButton = findViewById(R.id.viewOutfitsButton);
+        viewOutfitsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openViewOutfitsActivity();
+            }
+        });
+
 
         // Workaround for viewing items in the database, click button to print items to console in Android Studio
         viewItemsButton = findViewById(R.id.print_items_button);
@@ -205,6 +216,11 @@ public class StartUp extends AppCompatActivity {
 
     public void openCreateOutfitActivity() {
         Intent intent = new Intent(this, CreateOutfit.class);
+        startActivity(intent);
+    }
+
+    public void openViewOutfitsActivity() {
+        Intent intent = new Intent(this, ViewOutfits.class);
         startActivity(intent);
     }
 

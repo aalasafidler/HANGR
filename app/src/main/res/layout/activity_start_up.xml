@@ -8,16 +8,30 @@
     tools:context=".StartUp">
 
     <Button
+        android:id="@+id/viewOutfitsButton"
+        android:layout_width="131dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/wardrobe_button"
+        android:text="View"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
         android:id="@+id/newItemButton"
-        android:layout_width="193dp"
-        android:layout_height="91dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="158dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/wardrobe_button"
         android:text="Add Item"
         android:textColor="#ffffff"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.185"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -25,12 +39,13 @@
         android:id="@+id/outfitButton"
         android:layout_width="193dp"
         android:layout_height="91dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/outfit_button"
         android:text="Create Outfit"
         android:textColor="#ffffff"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.167"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newItemButton" />
 
