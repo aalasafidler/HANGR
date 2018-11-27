@@ -3,14 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Settings, should always be in the overflow -->
+    <!--<item android:id="@+id/view_saved_outfits"-->
+    <!--android:title="@string/view_gallery"-->
+    <!--app:showAsAction="never"/>-->
+
     <item android:id="@+id/go_back"
         android:title="@string/go_back"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/go_to_camera"
-        android:title="@string/go_to_camera"
+    <item android:id="@+id/view_gallery"
+        android:title="@string/view_gallery"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/share"
+        android:title="@string/share"
+        app:showAsAction="never"/>
 
 
 </menu>

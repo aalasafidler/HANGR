@@ -39,9 +39,9 @@ import java.util.List;
 
 public class StartUp extends AppCompatActivity {
     // Initialise elements on the startup activity
-    private Button newItemButton;
-    private Button outfitButton;
-    private Button viewItemsButton;
+    private Button addItembtn;
+    private Button viewOutfitsbtn;
+    private Button addOutfitsbtn;
     private TextView weatherInfoTextView;
     private TextView tempTextView;
     public static WardrobeItemDatabase wardrobeItemDatabase;
@@ -62,8 +62,8 @@ public class StartUp extends AppCompatActivity {
         wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(), WardrobeItemDatabase.class, "itemsdb.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         // Opens camera when add item clicked
-        newItemButton = findViewById(R.id.newItemButton);
-        newItemButton.setOnClickListener(new View.OnClickListener() {
+        addItembtn = findViewById(R.id.addItembtn);
+        addItembtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewItemActivity();
@@ -71,39 +71,48 @@ public class StartUp extends AppCompatActivity {
         });
 
         // Opens create outfit screen when clicked
-        outfitButton = findViewById(R.id.outfitButton);
-        outfitButton.setOnClickListener(new View.OnClickListener() {
+        addOutfitsbtn = findViewById(R.id.addOutfitsbtn);
+        addOutfitsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCreateOutfitActivity();
             }
         });
 
-        // Workaround for viewing items in the database, click button to print items to console in Android Studio
-        viewItemsButton = findViewById(R.id.print_items_button);
-        viewItemsButton.setOnClickListener(new View.OnClickListener() {
+        // Opens the view all outfits activity
+        viewOutfitsbtn = findViewById(R.id.viewOutfitsbtn);
+        viewOutfitsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<WardrobeItem> items = StartUp.wardrobeItemDatabase.wardrobeItemDao().getItems();
-
-                String info = "ID\tcategory\tlocation\tstyle\tcolour\tclean\timageFilePath\n\n";
-
-                for (WardrobeItem item : items) {
-                    int id = item.getId();
-                    String category = item.getCategory();
-                    String location = item.getLocation();
-                    String style = item.getStyle();
-                    String colour = item.getColour();
-                    String clean = Boolean.toString(item.getClean());
-                    String imageFilePath = item.getImageFilePath();
-
-                    info += id + "\t" + category + "\t" + location + "\t" + style + "\t" + colour + "\t" + clean + "\t" + imageFilePath + "\n";
-                }
-
-                Toast.makeText(StartUp.this, "Check terminal in android studio.", Toast.LENGTH_SHORT).show();
-                System.out.println(info);
+                openViewOutfitsActivity();
             }
         });
+
+//        // Workaround for viewing items in the database, click button to print items to console in Android Studio
+//        viewItemsButton = findViewById(R.id.print_items_button);
+//        viewItemsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                List<WardrobeItem> items = StartUp.wardrobeItemDatabase.wardrobeItemDao().getItems();
+//
+//                String info = "ID\tcategory\tlocation\tstyle\tcolour\tclean\timageFilePath\n\n";
+//
+//                for (WardrobeItem item : items) {
+//                    int id = item.getId();
+//                    String category = item.getCategory();
+//                    String location = item.getLocation();
+//                    String style = item.getStyle();
+//                    String colour = item.getColour();
+//                    String clean = Boolean.toString(item.getClean());
+//                    String imageFilePath = item.getImageFilePath();
+//
+//                    info += id + "\t" + category + "\t" + location + "\t" + style + "\t" + colour + "\t" + clean + "\t" + imageFilePath + "\n";
+//                }
+//
+//                Toast.makeText(StartUp.this, "Check terminal in android studio.", Toast.LENGTH_SHORT).show();
+//                System.out.println(info);
+//            }
+//        });
 
         // Initialise weather and temperature textviews, fill them with weather info
         weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
@@ -205,6 +214,11 @@ public class StartUp extends AppCompatActivity {
 
     public void openCreateOutfitActivity() {
         Intent intent = new Intent(this, CreateOutfit.class);
+        startActivity(intent);
+    }
+
+    public void openViewOutfitsActivity() {
+        Intent intent = new Intent(this, ViewOutfits.class);
         startActivity(intent);
     }
 

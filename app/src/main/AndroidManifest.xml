@@ -36,7 +36,10 @@
             android:parentActivityName=".CreateOutfit" />
 
         <activity android:name=".ViewAllItems"
-            android:parentActivityName=".CreateOutfit" />
+            android:parentActivityName=".StartUp" />
+
+        <activity android:name=".ViewOutfits"
+            android:parentActivityName=".StartUp" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

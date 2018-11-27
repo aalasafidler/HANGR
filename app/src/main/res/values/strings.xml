@@ -39,4 +39,22 @@
         <item>Green</item>
         <item>Yellow</item>
     </string-array>
+
+    // Strings in AddNewItem
+    <string name="category">Category</string>
+    <string name="color">Colour</string>
+    <string name="location">Location</string>
+    <string name="colour">Colour</string>
+    <string name="style">Style</string>
+    <string name="home">Home</string>
+    <string name="clean">Clean</string>
+    <string name="PreviewDesc">Preview</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
+    // Strings in View Outfits
+    <string name="share">Share</string>
+    <string name="send_to" />
+
+
 </resources>

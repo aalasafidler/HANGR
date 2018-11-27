@@ -131,6 +131,10 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 Style.setSelection(0, true);
                 Colour.setSelection(0, true);
                 Clean.setChecked(false);
+
+
+                viewGallery();
+
             }
         });
 
