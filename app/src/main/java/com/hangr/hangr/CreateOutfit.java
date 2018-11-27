@@ -33,8 +33,6 @@ public class CreateOutfit extends AppCompatActivity{
     Button saveOutfitButton;
     CarouselView tops_carousel, bottoms_carousel, shoes_carousel;
     Bitmap selectedTop, selectedBottom, selectedShoes, mergedOutfit;
-//    Bitmap picture = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/com.hangr.hangr/files/Pictures/Hangr_20181112__140519.jpg");
-
     public static WardrobeItemDatabase wardrobeItemDatabase;
 
     List<Bitmap> tops_images = new ArrayList<>();
@@ -49,26 +47,10 @@ public class CreateOutfit extends AppCompatActivity{
 
         wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(), WardrobeItemDatabase.class, "itemsdb.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
+        // Get all the items and add their pictures to the lists used to populate carousel views
         List<WardrobeItem> items = CreateOutfit.wardrobeItemDatabase.wardrobeItemDao().getItems();
+        addPicturesToList(items);
 
-        for (WardrobeItem item : items) {
-            String style = item.getStyle();
-            Bitmap picture = BitmapFactory.decodeFile(item.getImageFilePath());
-
-            switch (style) {
-                case "Tops":
-                    tops_images.add(picture);
-                    break;
-                case "Bottoms":
-                    bottoms_images.add(picture);
-                    break;
-                case "Shoes":
-                    shoes_images.add(picture);
-                    break;
-                default:
-                    System.out.println("Error matching style.");
-            }
-        }
 
         // Initialise the carousel views
         tops_carousel = findViewById(R.id.tops_carousel);
@@ -136,6 +118,27 @@ public class CreateOutfit extends AppCompatActivity{
         });
 
 
+    }
+
+    private void addPicturesToList(List<WardrobeItem> items) {
+        for (WardrobeItem item : items) {
+            String style = item.getStyle();
+            Bitmap picture = BitmapFactory.decodeFile(item.getImageFilePath());
+
+            switch (style) {
+                case "Tops":
+                    tops_images.add(picture);
+                    break;
+                case "Bottoms":
+                    bottoms_images.add(picture);
+                    break;
+                case "Shoes":
+                    shoes_images.add(picture);
+                    break;
+                default:
+                    System.out.println("Error matching style.");
+            }
+        }
     }
 
     @Override
@@ -229,29 +232,23 @@ public class CreateOutfit extends AppCompatActivity{
     }
 
     private Bitmap mergeMultiple(Bitmap[] parts){
+        // Merges 3 bitmaps together (vertically stacked) to create one single outfit bitmap
 
+        // Create blank canvas with the right scale which bitmaps will be placed onto
         Bitmap result = Bitmap.createBitmap(parts[0].getWidth(), parts[0].getHeight() + parts[1].getHeight() + parts[2].getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
-        int top = 0;
 
+        int top = 0; // number of pixels down from the top of the canvas to add the bitmap
+
+        // Draw bitmaps below each other
+        // Get a weird error trying to do increase height of canvas in a loop, manually adding for now
         canvas.drawBitmap(parts[0], 0, 0, paint);
-
-        System.out.println("Height of 0: " + parts[0].getHeight());
-        System.out.println("Height of 1: " + parts[1].getHeight());
-        System.out.println("Height of 2: " + parts[2].getHeight());
-
         top += parts[0].getHeight();
-
         canvas.drawBitmap(parts[1], 0, top, paint);
-
         top += parts[1].getHeight();
-
         canvas.drawBitmap(parts[2], 0, top, paint);
-        //canvas.drawBitmap(parts[2], 0, parts[0].getHeight() + parts[1].getHeight(), paint);
-//        for (int i = 0; i < parts.length; i++) {
-//            canvas.drawBitmap(parts[i], 0, parts[i].getHeight() * (i / 2), paint); //left: parts[i].getWidth()
-//        }
+
         return result;
     }
 

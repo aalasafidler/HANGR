@@ -39,18 +39,22 @@ public class ViewOutfits extends AppCompatActivity {
             String filePath = outfit.getPath();
             System.out.println(filePath);
             Bitmap outfitBitmap = BitmapFactory.decodeFile(filePath);
-            outfitBitmaps.add(outfitBitmap);
+
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(outfitBitmap, savedOutfits.getWidth(), savedOutfits.getHeight(), true);
+
+
+            outfitBitmaps.add(scaledBitmap);
         }
 
         savedOutfits.setPageCount(outfitImages.length);
         savedOutfits.setImageListener(outfits_Listener);
-
 
     }
 
     ImageListener outfits_Listener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
+            //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setImageBitmap(outfitBitmaps.get(position));
         }
     };
