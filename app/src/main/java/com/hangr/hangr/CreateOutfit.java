@@ -106,6 +106,8 @@ public class CreateOutfit extends AppCompatActivity{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                openAllOutfits();
             }
         });
 
@@ -163,6 +165,13 @@ public class CreateOutfit extends AppCompatActivity{
         Intent intent = new Intent(this, StartUp.class);
         startActivity(intent);
     }
+
+    // When run opens start up activity.
+    public void openAllOutfits() {
+        Intent intent = new Intent(this, ViewOutfits.class);
+        startActivity(intent);
+    }
+
 
     ImageListener tops_Listener = new ImageListener() {
         @Override
