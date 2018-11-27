@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -63,6 +64,9 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
         getSupportActionBar().setTitle("Add New Item");
+
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         //Initialises style dropdown menu
         Spinner spinner1 = findViewById(R.id.style_spinner);
@@ -131,6 +135,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 Style.setSelection(0, true);
                 Colour.setSelection(0, true);
                 Clean.setChecked(false);
+
 
 
                 viewGallery();
