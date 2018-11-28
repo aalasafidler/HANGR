@@ -11,10 +11,11 @@
     // Carousel showing all the user's saved outfits
 
     <ScrollView
-        android:layout_width="399dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,7 +35,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
-                android:text="SAVED OUTFITS"
+                android:text="@string/saved_outfits"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,12 +44,13 @@
 
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/saved_outfits_carousel"
-                android:layout_width="279dp"
-                android:layout_height="619dp"
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="50dp"
                 app:autoPlay="false"
                 app:fillColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,15 +59,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/saved_outfits_header"
                 app:radius="6dp"
                 app:slideInterval="3000">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="550dp"
-                    android:paddingTop="50dp"
-                    android:text="Open menu to access share option"
-                    android:textColor="@color/light_grey" />
 
 
             </com.synnapps.carouselview.CarouselView>

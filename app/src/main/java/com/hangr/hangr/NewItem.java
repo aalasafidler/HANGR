@@ -65,6 +65,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         setContentView(R.layout.activity_new_item);
         getSupportActionBar().setTitle("Add New Item");
 
+        /* Prevents keyboard from opening by itself */
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
