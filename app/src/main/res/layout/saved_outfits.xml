@@ -10,6 +10,16 @@
 
     // Carousel showing all the user's saved outfits
 
+    <Button
+        android:id="@+id/share_button"
+        android:layout_width="80dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="16dp"
+        android:text="Share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ScrollView
         android:layout_width="399dp"
         android:layout_height="wrap_content"
@@ -43,7 +53,7 @@
 
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/saved_outfits_carousel"
-                android:layout_width="279dp"
+                android:layout_width="199dp"
                 android:layout_height="619dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
@@ -57,15 +67,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/saved_outfits_header"
                 app:radius="6dp"
                 app:slideInterval="3000">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="550dp"
-                    android:paddingTop="50dp"
-                    android:text="Open menu to access share option"
-                    android:textColor="@color/light_grey" />
 
 
             </com.synnapps.carouselview.CarouselView>

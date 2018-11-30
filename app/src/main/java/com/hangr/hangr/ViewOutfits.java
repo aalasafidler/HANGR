@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.synnapps.carouselview.CarouselView;
@@ -24,6 +27,7 @@ public class ViewOutfits extends AppCompatActivity {
     CarouselView savedOutfits;
     File[] outfitImages;
     List<Bitmap> outfitBitmaps = new ArrayList<>();
+    Button shareButton;
 
     // Aalasa's
     List<Bitmap> tops_images = new ArrayList<>();
@@ -59,6 +63,25 @@ public class ViewOutfits extends AppCompatActivity {
         savedOutfits.setPageCount(outfitImages.length);
         savedOutfits.setImageListener(outfits_Listener);
 
+        shareButton = findViewById(R.id.share_button);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+
+                int position = savedOutfits.getCurrentItem();
+
+                File outfitToShare = outfitImages[position];
+
+                sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(ViewOutfits.this,
+                        BuildConfig.APPLICATION_ID + ".provider",
+                        outfitToShare));
+                sendIntent.setType("image/jpeg");
+                startActivity(Intent.createChooser(sendIntent, "Send to.."));
+                
+            }
+        });
 
     }
 
