@@ -2,6 +2,7 @@ package com.hangr.hangr;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
@@ -19,8 +20,11 @@ public interface WardrobeItemDao {
     @Query("select * from items")
     public List<WardrobeItem> getItems();
 
-    @Insert
-    public void addOutfit( Outfit item );
+    @Query("select * from outfits")
+    public List<Outfit> getOutfits();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public void addOutfit( Outfit outfit);
 
 
 
