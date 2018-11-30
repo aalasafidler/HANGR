@@ -1,5 +1,6 @@
 package com.hangr.hangr;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.net.Uri;
@@ -9,10 +10,13 @@ import android.support.annotation.NonNull;
 public class Outfit {
 
     @PrimaryKey
+    @ColumnInfo( name  = "position" )
     private int mPosition;
 
-    private Uri mUri;
+    @ColumnInfo( name = "uri")
+    private String mUri;
 
+    @ColumnInfo( name = "file_path")
     private String mFilePath;
 
     //Default constructor
@@ -21,7 +25,7 @@ public class Outfit {
     }
 
     //Overloaded constructor
-    public void Outfit(@NonNull int position, Uri uri, String filePath)
+    public void Outfit(@NonNull int position, String uri, String filePath)
     {
         this.mPosition = position;
         this.mUri = uri;
@@ -33,9 +37,9 @@ public class Outfit {
 
     public void setPosition( int position ) { this.mPosition = position; }
 
-    public Uri getUri() { return mUri; }
+    public String getUri() { return mUri; }
 
-    public void setUri( Uri uri ) { this.mUri = uri; }
+    public void setUri( String uri ) { this.mUri = uri; }
 
     public String getFilePath() { return mFilePath; }
 

@@ -1,5 +1,6 @@
 package com.hangr.hangr;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -20,11 +21,16 @@ public interface WardrobeItemDao {
     @Query("select * from items")
     public List<WardrobeItem> getItems();
 
-    @Query("select * from outfits")
+    @Query("SELECT * FROM outfits")
     public List<Outfit> getOutfits();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void addOutfit( Outfit outfit);
+
+    @Query("SELECT MAX(position) FROM outfits")
+    public int getMaxPosition();
+
+
 
 
 

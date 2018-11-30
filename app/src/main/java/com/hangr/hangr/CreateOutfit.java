@@ -36,6 +36,7 @@ public class CreateOutfit extends AppCompatActivity{
 //    Bitmap picture = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/com.hangr.hangr/files/Pictures/Hangr_20181112__140519.jpg");
 
     public static WardrobeItemDatabase wardrobeItemDatabase;
+    ;
 
     List<Bitmap> tops_images = new ArrayList<>();
     List<Bitmap> bottoms_images = new ArrayList<>();
@@ -109,7 +110,7 @@ public class CreateOutfit extends AppCompatActivity{
                 }
 
                 int position = 0;
-                Uri uri = Uri.parse("" + getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits/0.jpg");
+                Uri uri = Uri.parse("" + getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits/0.jpg"));
                 String filePath = "" + getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits/0.jpg");
                 openAllOutfits();
             }
@@ -208,7 +209,10 @@ public class CreateOutfit extends AppCompatActivity{
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new Date());
         //String imageFileName = "HangrOutfit_" + timeStamp + ".jpg";
-        int position = 0;
+
+        // Adding 1 to the position to increment file names
+        int position = wardrobeItemDatabase.wardrobeItemDao().getMaxPosition() + 1;
+
         String imageFileName = position + ".jpg";
 
         File image_file = new File(folder, imageFileName);
