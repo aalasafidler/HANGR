@@ -11,6 +11,11 @@
         android:title="@string/go_to_camera"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/all_items"
+        android:title="@string/view_gallery"
+        app:showAsAction="never"/>
+
+
 
 
 </menu>

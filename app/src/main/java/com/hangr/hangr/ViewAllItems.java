@@ -34,7 +34,7 @@ public class ViewAllItems extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_all_items);
-        getFromSdcard();
+        getFromSdcard(); //gone
         GridView imagegrid = (GridView) findViewById(R.id.PhoneImageGrid);
         imageAdapter = new ImageAdapter();
         imagegrid.setAdapter(imageAdapter);
@@ -52,6 +52,9 @@ public class ViewAllItems extends AppCompatActivity {
                 f.add(listFile[i].getAbsolutePath());
             }
         }
+    }
+
+    public void expand(View view) {
     }
 
     public class ImageAdapter extends BaseAdapter {
@@ -87,6 +90,7 @@ public class ViewAllItems extends AppCompatActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
 
+            // This is us creating a new bitmap but decoding f.get(position) from the carousel view
             Bitmap myBitmap = BitmapFactory.decodeFile(f.get(position));
             holder.imageview.setImageBitmap(myBitmap);
             return convertView;
@@ -95,4 +99,6 @@ public class ViewAllItems extends AppCompatActivity {
     class ViewHolder {
         ImageView imageview;
     }
+
+
 }

@@ -218,9 +218,11 @@ public class StartUp extends AppCompatActivity {
     }
 
     public void openViewOutfitsActivity() {
-        Intent intent = new Intent(this, ViewOutfits.class);
+        Intent intent = new Intent(this, SavedOutfits.class);
         startActivity(intent);
     }
+
+    ////changed this
 
     private File getFile() {
         // Makes directory and filename for picture to be saved

@@ -130,14 +130,11 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 Toast.makeText(NewItem.this, "Item added successfully!", Toast.LENGTH_SHORT).show();
 
                 // Resets the spinners to default values
-                // TODO: Bring user back to start page when an item is added? Or to the view item page
                 Category.setSelection(0, true);
                 Location.setText("");
                 Style.setSelection(0, true);
                 Colour.setSelection(0, true);
                 Clean.setChecked(false);
-
-
 
                 viewGallery();
 
@@ -152,7 +149,6 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(),StartUp.class);
                 startActivity(i);
             }
@@ -237,7 +233,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
     // When this method is run, all saved items will be shown.
     public void viewGallery() {
-        Intent intent = new Intent(this, ViewAllItems.class);
+        Intent intent = new Intent(this, test.class); //changed ViewAllItems.class
         startActivity(intent);
 
     }

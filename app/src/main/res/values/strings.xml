@@ -56,6 +56,9 @@
     <string name="share">Share</string>
     <string name="send_to" />
     <string name="saved_outfits">SAVED OUTFITS</string>
+    <string name="title_activity_gallery">Gallery</string>
+    <string name="description_zoom_touch_close" />
+    <string name="description_image_1" />
 
 
 </resources>

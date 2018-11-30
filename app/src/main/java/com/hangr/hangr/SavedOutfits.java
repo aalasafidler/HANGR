@@ -1,8 +1,10 @@
 package com.hangr.hangr;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -10,10 +12,14 @@ import android.widget.ImageView;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
+import java.io.File;
+import java.util.ArrayList;
+
 public class SavedOutfits extends AppCompatActivity {
 
     CarouselView saved_outfits_carousel;
     int[] savedOutfitsArray = {R.drawable.o1, R.drawable.o2, R.drawable.o3};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,8 @@ public class SavedOutfits extends AppCompatActivity {
         saved_outfits_carousel = (CarouselView) findViewById(R.id.saved_outfits_carousel);
         saved_outfits_carousel.setPageCount(savedOutfitsArray.length);
         saved_outfits_carousel.setImageListener(imageListener);
+
+
     }
 
     ImageListener imageListener = new ImageListener() {
@@ -32,6 +40,7 @@ public class SavedOutfits extends AppCompatActivity {
             imageView.setImageResource(savedOutfitsArray[position]);
         }
     };
+
 
     //    //https://www.youtube.com/watch?v=kknBxoCOYXI
     // This method creates the menu in the action bar.
@@ -53,6 +62,10 @@ public class SavedOutfits extends AppCompatActivity {
                 openCamera();
                 return true;
 
+            case R.id.all_items:
+                gogallery();
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -64,6 +77,13 @@ public class SavedOutfits extends AppCompatActivity {
     // When run opens Saved Outfits activity.
     public void goBack() {
         Intent intent = new Intent(this, CreateOutfit.class);
+        startActivity(intent);
+    }
+
+
+    // When run opens Saved Outfits activity.
+    public void gogallery() {
+        Intent intent = new Intent(this, test.class);
         startActivity(intent);
     }
 

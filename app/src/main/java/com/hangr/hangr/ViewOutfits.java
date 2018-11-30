@@ -29,7 +29,6 @@ public class ViewOutfits extends AppCompatActivity {
     List<Bitmap> tops_images = new ArrayList<>();
     Bitmap selectedTop;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +57,6 @@ public class ViewOutfits extends AppCompatActivity {
 
         savedOutfits.setPageCount(outfitImages.length);
         savedOutfits.setImageListener(outfits_Listener);
-
-
     }
 
     ImageListener outfits_Listener = new ImageListener() {
@@ -78,10 +75,6 @@ public class ViewOutfits extends AppCompatActivity {
     // This method controls what is done when menu items are selected.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-// INSTAGRAM intent shite
-// String type = "image/*";
-//        String filename = "/myPhoto.jpg";
-//        String mediaPath = Environment.getExternalStorageDirectory() + filename;
 
         switch (item.getItemId()) {
             case R.id.go_back:
@@ -92,17 +85,12 @@ public class ViewOutfits extends AppCompatActivity {
                 viewGallery();
                 return true;
 
-
             case R.id.share:
-                //createInstagramIntent(type, mediaPath);
                 share();
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -114,39 +102,16 @@ public class ViewOutfits extends AppCompatActivity {
 
     // When this method is run, all saved items will be shown.
     public void viewGallery() {
-        Intent intent = new Intent(this, ViewAllItems.class);
+        Intent intent = new Intent(this, test.class); //ViewAllItems.class);
         startActivity(intent);
     }
 
-    //public void share() {
-
-
     public void share() {
-
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
     }
-
-//    private void createInstagramIntent(String type, String mediaPath){
-//
-//        // Create the new Intent using the 'Send' action.
-//        Intent share = new Intent(Intent.ACTION_SEND);
-//
-//        // Set the MIME type
-//        share.setType(type);
-//
-//        // Create the URI from the media
-//        File media = new File(mediaPath);
-//        Uri uri = Uri.fromFile(media);
-//
-//        // Add the URI to the Intent.
-//        share.putExtra(Intent.EXTRA_STREAM, uri);
-//
-//        // Broadcast the Intent.
-//        startActivity(Intent.createChooser(share, "Share to"));
-//    }
 
 }
