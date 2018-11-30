@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -107,6 +108,9 @@ public class CreateOutfit extends AppCompatActivity{
                     e.printStackTrace();
                 }
 
+                int position = 0;
+                Uri uri = Uri.parse("" + getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits/0.jpg");
+                String filePath = "" + getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits/0.jpg");
                 openAllOutfits();
             }
         });
@@ -203,7 +207,9 @@ public class CreateOutfit extends AppCompatActivity{
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new Date());
-        String imageFileName = "HangrOutfit_" + timeStamp + ".jpg";
+        //String imageFileName = "HangrOutfit_" + timeStamp + ".jpg";
+        int position = 0;
+        String imageFileName = position + ".jpg";
 
         File image_file = new File(folder, imageFileName);
         return image_file;

@@ -6,12 +6,15 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 
 import java.io.File;
@@ -59,8 +62,17 @@ public class ViewOutfits extends AppCompatActivity {
         savedOutfits.setPageCount(outfitImages.length);
         savedOutfits.setImageListener(outfits_Listener);
 
+        savedOutfits.setImageClickListener(new ImageClickListener() {
+            @Override
+            public void onClick(int position) {
+                Toast.makeText(ViewOutfits.this, "Clicked item: "+  getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits"), Toast.LENGTH_SHORT).show();
+                share(position);
+            }
+        });
 
     }
+
+
 
     ImageListener outfits_Listener = new ImageListener() {
         @Override
@@ -120,15 +132,36 @@ public class ViewOutfits extends AppCompatActivity {
 
     //public void share() {
 
-
     public void share() {
+        String folder = Environment.DIRECTORY_PICTURES + "/Outfits/HangrOutfit_20181127_164839";
+        //String uri = ImageView.setImageBitmap(Uri.parse(new File(Environment.DIRECTORY_PICTURES + "/Outfits/*.jpg").toString()));
+
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-        sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_STREAM, folder);
+        sendIntent.setType("image/jpeg");
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
     }
+
+    public void share(int position) {
+        String folder =  "" + getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits/0.jpg");
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(folder));
+        sendIntent.setType("image/*");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+    }
+    }
+
+//    public void share() {
+//
+//        Intent sendIntent = new Intent();
+//        sendIntent.setAction(Intent.ACTION_SEND);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+//        sendIntent.setType("text/plain");
+//        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
+//    }
 
 //    private void createInstagramIntent(String type, String mediaPath){
 //
@@ -149,4 +182,4 @@ public class ViewOutfits extends AppCompatActivity {
 //        startActivity(Intent.createChooser(share, "Share to"));
 //    }
 
-}
+//}

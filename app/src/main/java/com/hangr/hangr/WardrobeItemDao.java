@@ -19,4 +19,9 @@ public interface WardrobeItemDao {
     @Query("select * from items")
     public List<WardrobeItem> getItems();
 
+    @Insert
+    public void addOutfit( Outfit item );
+
+
+
 }
