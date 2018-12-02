@@ -82,7 +82,7 @@ public class SavedOutfits extends AppCompatActivity {
 
     // When run opens Saved Outfits activity.
     public void gogallery() {
-        Intent intent = new Intent(this, test.class);
+        Intent intent = new Intent(this, ViewAllItems.class);
         startActivity(intent);
     }
 

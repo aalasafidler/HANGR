@@ -39,9 +39,7 @@ import java.util.List;
 
 public class StartUp extends AppCompatActivity {
     // Initialise elements on the startup activity
-    private Button addItembtn;
-    private Button viewOutfitsbtn;
-    private Button addOutfitsbtn;
+    private Button addItembtn, viewOutfitsbtn, addOutfitsbtn, viewItemsbtn;
     private TextView weatherInfoTextView;
     private TextView tempTextView;
     public static WardrobeItemDatabase wardrobeItemDatabase;
@@ -85,6 +83,15 @@ public class StartUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openViewOutfitsActivity();
+            }
+        });
+
+        // Opens the view all items gallery activity
+        viewItemsbtn = findViewById(R.id.viewItemsbtn);
+        viewItemsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openViewItemsActivity();
             }
         });
 
@@ -219,6 +226,11 @@ public class StartUp extends AppCompatActivity {
 
     public void openViewOutfitsActivity() {
         Intent intent = new Intent(this, SavedOutfits.class);
+        startActivity(intent);
+    }
+
+    public void openViewItemsActivity() {
+        Intent intent = new Intent(this, ViewAllItems.class);
         startActivity(intent);
     }
 

@@ -102,7 +102,7 @@ public class ViewOutfits extends AppCompatActivity {
 
     // When this method is run, all saved items will be shown.
     public void viewGallery() {
-        Intent intent = new Intent(this, test.class); //ViewAllItems.class);
+        Intent intent = new Intent(this, test.class); //oldViewAllItems.class);
         startActivity(intent);
     }
 

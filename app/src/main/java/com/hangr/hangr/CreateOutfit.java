@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -151,7 +150,7 @@ public class CreateOutfit extends AppCompatActivity{
     }
 
     public void viewGallery(){
-        Intent intent = new Intent(this, ViewAllItems.class);
+        Intent intent = new Intent(this, oldViewAllItems.class);
         startActivity(intent);
     }
 

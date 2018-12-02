@@ -34,7 +34,7 @@
             android:name=".SavedOutfits"
             android:parentActivityName=".CreateOutfit" />
         <activity
-            android:name=".ViewAllItems"
+            android:name=".oldViewAllItems"
             android:parentActivityName=".StartUp" />
         <activity
             android:name=".ViewOutfits"
