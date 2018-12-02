@@ -31,13 +31,15 @@ import java.util.Date;
 import java.util.Locale;
 
 public class NewItem extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SensorEventListener {
-    // Layout elements
-    Button cancel_button;
-    Button save_button;
-    Spinner Category;
+    /**
+     * Activity where user adds information to be associated with the image they just took
+     * Saves the item to a database
+     */
+
+    // Initialise layout elements
+    Button cancel_button, save_button;
+    Spinner Category, Style, Colour;
     EditText Location;
-    Spinner Style;
-    Spinner Colour;
     CheckBox Clean;
     ImageView Preview;
     Bitmap previewBitmap;
@@ -47,7 +49,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
     private SensorManager mSensorManager;
     private Sensor mLight;
 
-    // Getters and setters for most recent picture taken by the user
+    // Getters and setters for most recent picture taken by the user, used to show preview of image
     private static File mostRecentPic;
 
     public static void setMostRecentPic(File file) {
@@ -114,7 +116,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 String colour = Colour.getSelectedItem().toString();
                 boolean clean = Clean.isChecked();
 
-                // Save the values chosen for the item
+                // Set the values chosen for the item
                 WardrobeItem wardrobeItem = new WardrobeItem();
                 wardrobeItem.setCategory(category);
                 wardrobeItem.setLocation(location);
@@ -129,15 +131,14 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
                 Toast.makeText(NewItem.this, "Item added successfully!", Toast.LENGTH_SHORT).show();
 
                 // Resets the spinners to default values
-                // TODO: Bring user back to start page when an item is added? Or to the view item page
                 Category.setSelection(0, true);
-                Location.setText("");
+                Location.setText("Home");
                 Style.setSelection(0, true);
                 Colour.setSelection(0, true);
                 Clean.setChecked(false);
 
 
-
+                // Open view all items activity
                 viewGallery();
 
             }
@@ -147,6 +148,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
         mSensorManager = (SensorManager) getSystemService(NewItem.SENSOR_SERVICE);
         mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
+        // Cancel button brings user back to startup activity
         cancel_button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -193,9 +195,9 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
     public final void onSensorChanged(SensorEvent event) {
         float lightMeasurement = event.values[0];
 
-        // If lux measurement is below 10 the phone is in darkness, display toast to move to brighter room
+        // If lux measurement is below 10 the phone is in darkness, the image taken is likely too dark to be visible
         if (lightMeasurement < 10) {
-            String text = "Room too dark, lux: " + lightMeasurement;
+            String text = "That picture is very dark, please take another";
             Toast.makeText(NewItem.this, text, Toast.LENGTH_SHORT).show();
 
             // Unregister the listener so it doesn't constantly use resources, not essential to run constantly
@@ -228,7 +230,7 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    // When this method is run, Saved Outfits activity is opened.
+    // When this method is run, View Outfits activity is opened.
     public void goBack() {
         Intent intent = new Intent(this, StartUp.class);
         startActivity(intent);
@@ -238,6 +240,5 @@ public class NewItem extends AppCompatActivity implements AdapterView.OnItemSele
     public void viewGallery() {
         Intent intent = new Intent(this, ViewAllItems.class);
         startActivity(intent);
-
     }
 }

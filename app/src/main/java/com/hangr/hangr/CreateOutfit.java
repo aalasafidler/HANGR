@@ -31,11 +31,11 @@ import java.util.List;
 public class CreateOutfit extends AppCompatActivity{
     Button saveOutfitButton;
     CarouselView tops_carousel, bottoms_carousel, shoes_carousel;
-    Bitmap selectedTop, selectedBottom, selectedShoes, mergedOutfit;
-//    Bitmap picture = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/com.hangr.hangr/files/Pictures/Hangr_20181112__140519.jpg");
+    Bitmap selectedTop, selectedBottom, selectedShoes;
 
     public static WardrobeItemDatabase wardrobeItemDatabase;
 
+    // Lists that will hold different items based on their style
     List<Bitmap> tops_images = new ArrayList<>();
     List<Bitmap> bottoms_images = new ArrayList<>();
     List<Bitmap> shoes_images = new ArrayList<>();
@@ -46,10 +46,13 @@ public class CreateOutfit extends AppCompatActivity{
         setContentView(R.layout.create_outfit);
         getSupportActionBar().setTitle("Create an Outfit");
 
+        // Build database
         wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(), WardrobeItemDatabase.class, "itemsdb.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
+        // Get all items in database
         List<WardrobeItem> items = CreateOutfit.wardrobeItemDatabase.wardrobeItemDao().getItems();
 
+        // Add each item's image to the correct list
         for (WardrobeItem item : items) {
             String style = item.getStyle();
             Bitmap picture = BitmapFactory.decodeFile(item.getImageFilePath());
@@ -84,11 +87,12 @@ public class CreateOutfit extends AppCompatActivity{
         shoes_carousel.setPageCount(shoes_images.size());
         shoes_carousel.setImageListener(shoes_Listener);
 
+        // Save the outfit to a file by merging the 3 selected images on top of each other into 1 image
         saveOutfitButton = findViewById(R.id.save_outfit_button);
         saveOutfitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CreateOutfit.this, "Top selected: " + tops_carousel.getCurrentItem(), Toast.LENGTH_SHORT).show();
+                // Get the images currently selected within the CarouselViews
                 selectedTop = tops_images.get(tops_carousel.getCurrentItem());
                 selectedBottom = bottoms_images.get(bottoms_carousel.getCurrentItem());
                 selectedShoes = shoes_images.get(shoes_carousel.getCurrentItem());
@@ -97,24 +101,26 @@ public class CreateOutfit extends AppCompatActivity{
                 File file = getOutfitFile();
                 System.out.println("File: " + file);
 
+                // Merge the 3 images into 1 image
                 Bitmap mergedOutfit = mergeMultiple(new Bitmap[]{selectedTop, selectedBottom, selectedShoes});
 
+                // Save the outfit image
                 try (FileOutputStream out = new FileOutputStream(file)) {
-                    mergedOutfit.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
-                    // PNG is a lossless format, the compression factor (100) is ignored
-                    Toast.makeText(CreateOutfit.this, "Saved: "+ file.toString(), Toast.LENGTH_SHORT).show();
+                    mergedOutfit.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    Toast.makeText(CreateOutfit.this, "Saved your outfit!", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                openAllOutfits();
+                // Change activity to view the outfits you've made
+                openSavedOutfits();
             }
         });
 
     }
 
     @Override
-            public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.outfits_menu, menu);
         return true;
     }
@@ -124,10 +130,6 @@ public class CreateOutfit extends AppCompatActivity{
         switch (item.getItemId()) {
 
             case R.id.view_saved_outfits:
-                openSavedOutfits();
-                return true;
-
-            case R.id.settings:
                 openSavedOutfits();
                 return true;
 
@@ -154,9 +156,9 @@ public class CreateOutfit extends AppCompatActivity{
         startActivity(intent);
     }
 
-    // When run opens Saved Outfits activity.
+    // When run opens View Outfits activity.
     public void openSavedOutfits() {
-        Intent intent = new Intent(this, SavedOutfits.class);
+        Intent intent = new Intent(this, ViewOutfits.class);
         startActivity(intent);
     }
 
@@ -166,13 +168,8 @@ public class CreateOutfit extends AppCompatActivity{
         startActivity(intent);
     }
 
-    // When run opens start up activity.
-    public void openAllOutfits() {
-        Intent intent = new Intent(this, ViewOutfits.class);
-        startActivity(intent);
-    }
 
-
+    // Listeners which set the images contained within each CarouselView
     ImageListener tops_Listener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
@@ -194,14 +191,17 @@ public class CreateOutfit extends AppCompatActivity{
         }
     };
 
+
     private File getOutfitFile() {
+        // Creates folder and file to save outfit image into
+
         File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits");
-        System.out.println("Folder: " + folder);
 
         if (!folder.exists()) {
             folder.mkdir();
         }
 
+        // Create collision resistant filename using timestamp
         String timeStamp = new SimpleDateFormat("yyyyMMdd__HHmmss").format(new Date());
         String imageFileName = "HangrOutfit_" + timeStamp + ".jpg";
 
@@ -220,7 +220,7 @@ public class CreateOutfit extends AppCompatActivity{
         int top = 0; // number of pixels down from the top of the canvas to add the bitmap
 
         // Draw bitmaps below each other
-        // Get a weird error trying to do increase height of canvas in a loop, manually adding for now
+        // I get a weird error trying to increase height of canvas in a loop, manually adding for now
         canvas.drawBitmap(parts[0], 0, 0, paint);
         top += parts[0].getHeight();
         canvas.drawBitmap(parts[1], 0, top, paint);

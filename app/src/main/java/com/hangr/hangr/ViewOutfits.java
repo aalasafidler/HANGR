@@ -3,7 +3,6 @@ package com.hangr.hangr;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
@@ -22,16 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewOutfits extends AppCompatActivity {
+    /**
+     * View all outfits created by the user
+     */
 
-    // All Dillon's
+    // Initialise layout elements
     CarouselView savedOutfits;
     File[] outfitImages;
     List<Bitmap> outfitBitmaps = new ArrayList<>();
     Button shareButton;
-
-    // Aalasa's
-    List<Bitmap> tops_images = new ArrayList<>();
-    Bitmap selectedTop;
 
 
     @Override
@@ -41,18 +39,12 @@ public class ViewOutfits extends AppCompatActivity {
 
         savedOutfits = findViewById(R.id.saved_outfits_carousel);
 
-        // The folder where all the outfits you've made are saved
+        // Get the folder where all the outfits you've made are saved
         File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/Outfits");
 
         outfitImages = folder.listFiles();
 
-        String type = "image/*";
-        String filename = "/myPhoto.jpg";
-        String mediaPath = Environment.getExternalStorageDirectory() + filename;
-        System.out.println(outfitImages);
-
-
-        // TODO: Make bitmaps scale to the size of the carouselview
+        // Create a bitmap of each outfit and add it to the bitmap arraylist
         for (File outfit : outfitImages) {
             String filePath = outfit.getPath();
             System.out.println(filePath);
@@ -60,9 +52,11 @@ public class ViewOutfits extends AppCompatActivity {
             outfitBitmaps.add(outfitBitmap);
         }
 
+        // Set page number and listener for the outfits CarouselView
         savedOutfits.setPageCount(outfitImages.length);
         savedOutfits.setImageListener(outfits_Listener);
 
+        // Share the outfit image currently selected by the user if share button is clicked
         shareButton = findViewById(R.id.share_button);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +64,7 @@ public class ViewOutfits extends AppCompatActivity {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
 
+                // Gets position of the currently selected outfit within the CarouselView
                 int position = savedOutfits.getCurrentItem();
 
                 File outfitToShare = outfitImages[position];
@@ -78,6 +73,8 @@ public class ViewOutfits extends AppCompatActivity {
                         BuildConfig.APPLICATION_ID + ".provider",
                         outfitToShare));
                 sendIntent.setType("image/jpeg");
+
+                // Opens intent to share image with other apps
                 startActivity(Intent.createChooser(sendIntent, "Send to.."));
                 
             }
@@ -85,6 +82,7 @@ public class ViewOutfits extends AppCompatActivity {
 
     }
 
+    // Sets images displayed within outfits CarouselView
     ImageListener outfits_Listener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
@@ -101,11 +99,6 @@ public class ViewOutfits extends AppCompatActivity {
     // This method controls what is done when menu items are selected.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-// INSTAGRAM intent shite
-// String type = "image/*";
-//        String filename = "/myPhoto.jpg";
-//        String mediaPath = Environment.getExternalStorageDirectory() + filename;
-
         switch (item.getItemId()) {
             case R.id.go_back:
                 goBack();
@@ -114,13 +107,6 @@ public class ViewOutfits extends AppCompatActivity {
             case R.id.view_gallery:
                 viewGallery();
                 return true;
-
-
-            case R.id.share:
-                //createInstagramIntent(type, mediaPath);
-                share();
-                return true;
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -129,7 +115,7 @@ public class ViewOutfits extends AppCompatActivity {
         }
     }
 
-    // When this method is run, Saved Outfits activity is opened.
+    // When this method is run, start up activity is opened.
     public void goBack() {
         Intent intent = new Intent(this, StartUp.class);
         startActivity(intent);
@@ -140,36 +126,5 @@ public class ViewOutfits extends AppCompatActivity {
         Intent intent = new Intent(this, ViewAllItems.class);
         startActivity(intent);
     }
-
-    //public void share() {
-
-
-    public void share() {
-
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-        sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
-    }
-
-//    private void createInstagramIntent(String type, String mediaPath){
-//
-//        // Create the new Intent using the 'Send' action.
-//        Intent share = new Intent(Intent.ACTION_SEND);
-//
-//        // Set the MIME type
-//        share.setType(type);
-//
-//        // Create the URI from the media
-//        File media = new File(mediaPath);
-//        Uri uri = Uri.fromFile(media);
-//
-//        // Add the URI to the Intent.
-//        share.putExtra(Intent.EXTRA_STREAM, uri);
-//
-//        // Broadcast the Intent.
-//        startActivity(Intent.createChooser(share, "Share to"));
-//    }
 
 }

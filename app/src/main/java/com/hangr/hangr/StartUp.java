@@ -1,15 +1,12 @@
 package com.hangr.hangr;
 
 import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,35 +29,41 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class StartUp extends AppCompatActivity {
+    /**
+     * StartUp activity displays buttons to navigate through our app and some weather info
+     */
+
     // Initialise elements on the startup activity
-    private Button addItembtn;
-    private Button viewOutfitsbtn;
-    private Button addOutfitsbtn;
+    private Button addItembtn, viewOutfitsbtn, addOutfitsbtn, viewItemsbtn;
     private TextView weatherInfoTextView;
-    private TextView tempTextView;
     public static WardrobeItemDatabase wardrobeItemDatabase;
     static final int CAM_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**
+         * Initialises layout and elements of startup screen
+         * Adds listeners to buttons and displays weather info
+         */
+
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start_up);
+
         // Hide navbar
         hideNavigationBar();
 
         //Build database
         wardrobeItemDatabase = Room.databaseBuilder(getApplicationContext(), WardrobeItemDatabase.class, "itemsdb.db").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
-        // Opens camera when add item clicked
+        // Opens camera when add item button clicked
         addItembtn = findViewById(R.id.addItembtn);
         addItembtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +72,7 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
-        // Opens create outfit screen when clicked
+        // Opens create outfit screen when add outfit button clicked
         addOutfitsbtn = findViewById(R.id.addOutfitsbtn);
         addOutfitsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +81,7 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
-        // Opens the view all outfits activity
+        // Opens the view all outfits activity when view outfits button clicked
         viewOutfitsbtn = findViewById(R.id.viewOutfitsbtn);
         viewOutfitsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,36 +90,20 @@ public class StartUp extends AppCompatActivity {
             }
         });
 
-//        // Workaround for viewing items in the database, click button to print items to console in Android Studio
-//        viewItemsButton = findViewById(R.id.print_items_button);
-//        viewItemsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                List<WardrobeItem> items = StartUp.wardrobeItemDatabase.wardrobeItemDao().getItems();
-//
-//                String info = "ID\tcategory\tlocation\tstyle\tcolour\tclean\timageFilePath\n\n";
-//
-//                for (WardrobeItem item : items) {
-//                    int id = item.getId();
-//                    String category = item.getCategory();
-//                    String location = item.getLocation();
-//                    String style = item.getStyle();
-//                    String colour = item.getColour();
-//                    String clean = Boolean.toString(item.getClean());
-//                    String imageFilePath = item.getImageFilePath();
-//
-//                    info += id + "\t" + category + "\t" + location + "\t" + style + "\t" + colour + "\t" + clean + "\t" + imageFilePath + "\n";
-//                }
-//
-//                Toast.makeText(StartUp.this, "Check terminal in android studio.", Toast.LENGTH_SHORT).show();
-//                System.out.println(info);
-//            }
-//        });
+        // Opens the view all items gallery activity when view items button clicked
+        viewItemsbtn = findViewById(R.id.viewItemsbtn);
+        viewItemsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openViewItemsActivity();
+            }
+        });
+
 
         // Initialise weather and temperature textviews, fill them with weather info
         weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
 
-        if (isNetworkAvailable() == true) {
+        if (isNetworkAvailable()) {
             findWeather();
         }
         else{
@@ -126,15 +112,20 @@ public class StartUp extends AppCompatActivity {
         }
     }
     private boolean isNetworkAvailable() {
+        // Check for internet connection
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
     public void findWeather() {
-        String url = "http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&appid=4acded150a8a59a5e4a0a894906adf09&units=metric";
-        // Send GET request to openweathermap
+        // Requests weather from OpenWeatherMap API and displays weather information
 
+        // Url holds location and api key for the request
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=Dublin,Ireland&appid=4acded150a8a59a5e4a0a894906adf09&units=metric";
+
+
+        // Send GET request to openweathermap and pick apart the response
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -174,17 +165,18 @@ public class StartUp extends AppCompatActivity {
         });
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(jor);}
+        queue.add(jor);
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         hideNavigationBar();
 
     }
 
     private void hideNavigationBar() {
+        // Hides elements of the navigation bar we don't want to display
         this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
@@ -198,9 +190,9 @@ public class StartUp extends AppCompatActivity {
         // Creates intent to take a picture
         Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        // Initialise the file that the picture you take will be saved into
+        // Initialise the file that the picture you are about to take will be saved into
         File file = getFile();
-        System.out.println("File: " + file);
+        System.out.println("Picture will be saved to: " + file);
 
         // Saves the picture you took into the file
         camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(StartUp.this,
@@ -222,8 +214,15 @@ public class StartUp extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openViewItemsActivity() {
+        Intent intent = new Intent(this, ViewAllItems.class);
+        startActivity(intent);
+    }
+
+
     private File getFile() {
         // Makes directory and filename for picture to be saved
+
         File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         System.out.println("Folder: " + folder);
 
@@ -241,12 +240,10 @@ public class StartUp extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // This method is called when you return from taking the picture
+        // This method is called when you return from taking the picture with camera intent
         // Sends the user to the new item screen, not back to the start screen
 
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("Request: " + requestCode);
-        System.out.println("Request: " + resultCode);
 
         // 1 is the code when returning from the camera
         // Starts the NewItem activity after picture is taken
@@ -255,5 +252,39 @@ public class StartUp extends AppCompatActivity {
             );
             startActivity(home);
         }
+    }
+
+    public void printDatabaseToConsole() {
+        /**
+         * Prints all rows in the Rooms database to the console in Android studio
+         * Workaround function to view all items in the database
+         * This function was used during development, not needed for production
+         * To use this function: need to create a button on Startup with id print_items_button and call this method onclick
+         */
+
+//        viewItemsButton = findViewById(R.id.print_items_button);
+//        viewItemsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                List<WardrobeItem> items = StartUp.wardrobeItemDatabase.wardrobeItemDao().getItems();
+//
+//                String info = "ID\tcategory\tlocation\tstyle\tcolour\tclean\timageFilePath\n\n";
+//
+//                for (WardrobeItem item : items) {
+//                    int id = item.getId();
+//                    String category = item.getCategory();
+//                    String location = item.getLocation();
+//                    String style = item.getStyle();
+//                    String colour = item.getColour();
+//                    String clean = Boolean.toString(item.getClean());
+//                    String imageFilePath = item.getImageFilePath();
+//
+//                    info += id + "\t" + category + "\t" + location + "\t" + style + "\t" + colour + "\t" + clean + "\t" + imageFilePath + "\n";
+//                }
+//
+//                Toast.makeText(StartUp.this, "Check terminal in android studio.", Toast.LENGTH_SHORT).show();
+//                System.out.println(info);
+//            }
+//        });
     }
 }
