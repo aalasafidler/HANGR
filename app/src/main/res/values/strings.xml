@@ -55,6 +55,7 @@
     // Strings in View Outfits
     <string name="share">Share</string>
     <string name="send_to" />
+    <string name="view_outfits">View outfits</string>
 
 
 </resources>

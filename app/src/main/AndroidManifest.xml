@@ -35,6 +35,9 @@
         <activity android:name=".ViewAllItems"
             android:parentActivityName=".StartUp" />
 
+        <activity android:name=".Weather"
+            android:parentActivityName=".StartUp" />
+
         <activity android:name=".ViewOutfits"
             android:parentActivityName=".StartUp" />
 

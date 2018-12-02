@@ -102,6 +102,12 @@ public class StartUp extends AppCompatActivity {
 
         // Initialise weather and temperature textviews, fill them with weather info
         weatherInfoTextView = findViewById(R.id.weatherInfoTextView);
+        weatherInfoTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWeatherActivity();
+            }
+        });
 
         if (isNetworkAvailable()) {
             findWeather();
@@ -216,6 +222,11 @@ public class StartUp extends AppCompatActivity {
 
     public void openViewItemsActivity() {
         Intent intent = new Intent(this, ViewAllItems.class);
+        startActivity(intent);
+    }
+
+    public void openWeatherActivity() {
+        Intent intent = new Intent(this, Weather.class);
         startActivity(intent);
     }
 

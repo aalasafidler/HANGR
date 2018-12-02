@@ -1,11 +1,14 @@
 package com.hangr.hangr;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.GridView;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -42,6 +45,7 @@ public class ViewAllItems extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.view_all_items);
+        getSupportActionBar().setTitle("Your Wardrobe");
 
         // Get the folder where all images have been saved to
         File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -257,5 +261,40 @@ public class ViewAllItems extends AppCompatActivity {
             });
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.gallerys_menu, menu);
+        return true;
+    }
 
+    // This method controls what is done when menu items are selected.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.go_back:
+                goBack();
+                return true;
+
+            case R.id.view_saved_outfits:
+                viewOutfits();
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    // When this method is run, start up activity is opened.
+    public void goBack() {
+        Intent intent = new Intent(this, StartUp.class);
+        startActivity(intent);
+    }
+
+    // When this method is run, all saved items will be shown.
+    public void viewOutfits() {
+        Intent intent = new Intent(this, ViewOutfits.class);
+        startActivity(intent);
+    }
 }
