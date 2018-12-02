@@ -23,23 +23,40 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.synnapps.carouselview.ImageListener;
+
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class test extends Activity {
-
-    // References to our images in res > drawable
-    public ArrayList<Integer> mThumbIds = new ArrayList<>();
-    // if it takes strings, then ill have to reconvert them back to images
+    
+    
+    
+    public ArrayList<Bitmap> mBitmapImages = new ArrayList<>();
 
     File[] listFile;
     ArrayList<String> f = new ArrayList<String>();// list of file paths
+    ArrayList<Bitmap> fml = new ArrayList<Bitmap>();// list of file paths
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get the view from activity_main.xml
+
         setContentView(R.layout.test);
+
+        // Folder with all the images
+        File folder = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        File[] imageFiles = folder.listFiles();
+
+        for (File image : imageFiles) {
+            String filePath = image.getPath();
+
+            Bitmap imageBitmap = BitmapFactory.decodeFile(filePath);
+
+            mBitmapImages.add(imageBitmap);
+        }
 
         getFromSdcard();
 
@@ -47,9 +64,12 @@ public class test extends Activity {
         gridview.setAdapter(new ImageAdapter(this));
 
         // All items in drawable are actually integers
-        mThumbIds.add(R.drawable.logo);
+        //mBitmapImages.add(R.drawable.logo);
 
+        //how did dillon convert from string to image, then add the image?
+        File imgFile = new  File(f.get(0));
     }
+
 
     public void getFromSdcard()
     {
@@ -61,24 +81,28 @@ public class test extends Activity {
             for (int i = 0; i < listFile.length; i++)
             {
                 f.add(listFile[i].getAbsolutePath());
-
+                Bitmap myBitmap = BitmapFactory.decodeFile(f.get(i));
+                fml.add(myBitmap);
             }
         }
-
-        Bitmap myBitmap = BitmapFactory.decodeFile(f.get(0));
-
         //convert bitmap into integer?
 
-        mThumbIds.add(0);
+        //mBitmapImages.add(3);
 
         Log.d("MyTag", "xxxFile file " + file);
         Log.d("MyTag", "xxxFile length " + file.length());
         Log.d("MyTag", "xxxFile length " + file.isDirectory());
         Log.d("MyTag", "xxxFirst element in f: " + f.get(0));
-        Log.d("MyTag", "xxx newBitmap " + myBitmap);
+        //f is a list with loadsa stuff inside, separated by commas
 
-        //mThumbIds.add(2);
+        Log.d("MyTag", "xxx All the Bitmaps? " + fml);
+        Log.d("MyTag", "xxx Drawables? " +  (R.drawable.ic_launcher_background));
+
+        //mBitmapImages.add(2131230825);
+
+
     }
+
 
 
     public class ImageAdapter extends BaseAdapter {
@@ -95,11 +119,11 @@ public class test extends Activity {
         }
 
         public int getCount() {
-            return mThumbIds.size();
+            return mBitmapImages.size();
         }
 
         public Object getItem(int position) {
-            return mThumbIds.get(position);
+            return mBitmapImages.get(position);
         }
 
         public long getItemId(int position) {
@@ -116,21 +140,27 @@ public class test extends Activity {
                 imageView = (ImageView) convertView;
             }
 
-            imageView.setImageResource(mThumbIds.get(position));
-            imageView.setTag(mThumbIds.get(position));
+//            ImageListener imageListener = new ImageListener() {
+//                @Override
+//                public void setImageForPosition(int position, ImageView imageView) {
+//                    imageView.setImageResource(savedOutfitsArray[position]);
+//                }
+//            };
+
+            imageView.setImageBitmap(mBitmapImages.get(position));
+           // imageView.setImageListener(bottoms_Listener);
+            imageView.setTag(mBitmapImages.get(position));
             imageView.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
-                    int id = (Integer) arg0.getTag();
-                    zoomImageFromThumb(arg0, id);
+                    //int id = (Integer) arg0.getTag();
+                    zoomImageFromThumb(arg0, 1);
                 }
             });
 
             return imageView;
         }
-
-
 
         private void zoomImageFromThumb(final View thumbView, int imageResId) {
             // If there's an animation in progress, cancel it immediately and
@@ -142,7 +172,9 @@ public class test extends Activity {
             // Load the high-resolution "zoomed-in" image.
             final ImageView expandedImageView = (ImageView) ((Activity) mContext)
                     .findViewById(R.id.expanded_image);
-            expandedImageView.setImageResource(imageResId);
+            expandedImageView.setImageBitmap(mBitmapImages.get(1));
+
+            //imageResId
 
             // Calculate the starting and ending bounds for the zoomed-in image.
             // This step

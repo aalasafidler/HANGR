@@ -19,6 +19,7 @@ import com.hangr.hangr.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewAllItems extends AppCompatActivity {
     private int count;
@@ -28,6 +29,7 @@ public class ViewAllItems extends AppCompatActivity {
     private ImageAdapter imageAdapter;
     ArrayList<String> f = new ArrayList<String>();// list of file paths
     File[] listFile;
+    List<Bitmap> tops_images = new ArrayList<>();
 
     /** Called when the activity is first created. */
     @Override
@@ -38,6 +40,9 @@ public class ViewAllItems extends AppCompatActivity {
         GridView imagegrid = (GridView) findViewById(R.id.PhoneImageGrid);
         imageAdapter = new ImageAdapter();
         imagegrid.setAdapter(imageAdapter);
+
+
+        List<WardrobeItem> items = CreateOutfit.wardrobeItemDatabase.wardrobeItemDao().getItems();
 
     }
     public void getFromSdcard()
@@ -52,6 +57,8 @@ public class ViewAllItems extends AppCompatActivity {
                 f.add(listFile[i].getAbsolutePath());
             }
         }
+
+    //    Bitmap picture = BitmapFactory.decodeFile(item.getImageFilePath());
     }
 
     public void expand(View view) {

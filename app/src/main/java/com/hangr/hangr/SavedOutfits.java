@@ -31,7 +31,6 @@ public class SavedOutfits extends AppCompatActivity {
         saved_outfits_carousel.setPageCount(savedOutfitsArray.length);
         saved_outfits_carousel.setImageListener(imageListener);
 
-
     }
 
     ImageListener imageListener = new ImageListener() {
