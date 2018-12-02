@@ -7,7 +7,8 @@
 + Item added sucessfully.
 
 ### Create an Outfit
-In order to create an outfit you must have at least one image in all three item categories, i.e. tops, bottoms, + Start Up: Click "CREATE OUTFIT". You will be redirected to:
+- ![#1589F0]In order to create an outfit you must have at least one image in all three item categories, i.e. tops, bottoms, shoes. #1589F0
++ Start Up: Click "CREATE OUTFIT". You will be redirected to:
 + Create an Outfit: Use the carousel views to swipe and search for an outfit combination to your liking.
 + Scroll down and hit the "SAVE" button. You will be redirected to your previously saved outfits.
 
